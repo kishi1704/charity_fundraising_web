@@ -1,0 +1,8 @@
+.classpath
+.project
+.settings/
+target/
+META-INF/
+plugins/
+test/
+/build/
