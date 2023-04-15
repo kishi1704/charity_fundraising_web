@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+.content {
+	margin-top: 145px;
+}
+
+.content-header {
+	margin-top: 20px;
+	font-family: 'Roboto Condensed', sans-serif;
+	text-align: center;
+}
+
+@media ( max-width : 768px) {
+	.content {
+		margin-top: 100px;
+	}
+}

@@ -1,0 +1,30 @@
+@charset "UTF-8";
+.content {
+	margin-left: 4rem;
+}
+
+.w-5 {
+  width: 5% !important;
+}
+
+.w-10 {
+  width: 10% !important;
+}
+
+.w-15 {
+  width: 15% !important;
+}
+
+.w-40 {
+  width: 40% !important;
+}
+
+.list-group-item.disabled {
+	background-color: transparent;
+}
+
+@media ( min-width : 768px) {
+	.content {
+		margin-left: 14rem;
+	}
+}

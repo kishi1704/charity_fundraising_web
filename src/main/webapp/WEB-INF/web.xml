@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0">
+	<display-name>charity-fundraising-web</display-name>
+
+	<welcome-file-list>
+		<welcome-file>home</welcome-file>
+	</welcome-file-list>
+
+	<!-- All Start -->
+	<servlet>
+		<servlet-name>LoginController</servlet-name>
+		<servlet-class>controller.all.LoginController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginController</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+	<!-- All End -->
+
+	<!-- Admin Start -->
+	<servlet>
+		<servlet-name>Admin</servlet-name>
+		<servlet-class>controller.admin.Navigator</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Admin</servlet-name>
+		<url-pattern>/admin</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AdminHome</servlet-name>
+		<servlet-class>controller.admin.HomeController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminHome</servlet-name>
+		<url-pattern>/admin/home</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AdminCategory</servlet-name>
+		<servlet-class>controller.admin.CategoryController</servlet-class>
+		<init-param>
+			<param-name>pageSize</param-name>
+			<param-value>4</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminCategory</servlet-name>
+		<url-pattern>/admin/category</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AdminFoundation</servlet-name>
+		<servlet-class>controller.admin.FoundationController</servlet-class>
+		<init-param>
+			<param-name>pageSize</param-name>
+			<param-value>4</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminFoundation</servlet-name>
+		<url-pattern>/admin/foundation</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AdminDonation</servlet-name>
+		<servlet-class>controller.admin.DonationController</servlet-class>
+		<init-param>
+			<param-name>pageSize</param-name>
+			<param-value>4</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminDonation</servlet-name>
+		<url-pattern>/admin/donation</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AdminFund</servlet-name>
+		<servlet-class>controller.admin.FundController</servlet-class>
+		<init-param>
+			<param-name>pageSize</param-name>
+			<param-value>4</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminFund</servlet-name>
+		<url-pattern>/admin/fund</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AdminAccount</servlet-name>
+		<servlet-class>controller.admin.UserController</servlet-class>
+		<init-param>
+			<param-name>pageSize</param-name>
+			<param-value>4</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminAccount</servlet-name>
+		<url-pattern>/admin/user</url-pattern>
+	</servlet-mapping>
+
+	<!-- Admin End -->
+
+	<!-- Client Start -->
+	<servlet>
+		<servlet-name>ClientHome</servlet-name>
+		<servlet-class>controller.client.HomeController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ClientHome</servlet-name>
+		<url-pattern>/home</url-pattern>
+	</servlet-mapping>
+	<!-- Client End -->
+
+	<!-- CKFinder Start -->
+	<servlet>
+		<servlet-name>ConnectorServlet</servlet-name>
+		<servlet-class>com.ckfinder.connector.ConnectorServlet</servlet-class>
+		<init-param>
+			<description>
+				Path to configuration file can be relative path inside application,
+				absolute path on local file system or UNC path.
+			</description>
+			<param-name>XMLConfig</param-name>
+			<param-value>/WEB-INF/config.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ConnectorServlet</servlet-name>
+		<url-pattern>
+			/plugins/ckfinder/core/connector/java/connector.java
+		</url-pattern>
+	</servlet-mapping>
+
+	<!-- CKFinder End -->
+</web-app>

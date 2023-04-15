@@ -1,0 +1,14 @@
+@charset "UTF-8";
+.content {
+	margin-left: 4rem;
+}
+
+.list-group-item.disabled {
+	background-color: transparent;
+}
+
+@media ( min-width : 768px) {
+	.content {
+		margin-left: 14rem;
+	}
+}

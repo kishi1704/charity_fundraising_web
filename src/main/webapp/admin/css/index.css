@@ -1,0 +1,10 @@
+@charset "UTF-8";
+.content {
+	margin-left: 4rem;
+}
+
+@media ( min-width : 768px) {
+	.content {
+		margin-left: 14rem;
+	}
+}
