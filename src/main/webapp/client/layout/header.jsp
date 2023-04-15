@@ -13,9 +13,9 @@
 			<c:when test="${empty sessionScope.user}">
 				<nav
 					class="nav col-12 col-md-6 justify-content-center justify-content-md-end fs-5">
-					<a href="${pageContext.request.contextPath}/login"
+					<a href="<c:url value="/login"/>"
 						class="nav-link text-dark">Đăng nhập</a> <a
-						href="${pageContext.request.contextPath}/register"
+						href="<c:url value="/register" />"
 						class="nav-link text-dark">Đăng ký</a>
 				</nav>
 			</c:when>
@@ -37,7 +37,7 @@
 							href="${pageContext.request.contextPath}/password?action=changepassword">Thay
 								đổi mật khẩu</a></li>
 						<li><a class="dropdown-item"
-							href="${pageContext.request.contextPath}/logout">Đăng xuất</a></li>
+							href="<c:url value="/logout"/>">Đăng xuất</a></li>
 					</ul>
 				</div>
 			</c:when>

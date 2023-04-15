@@ -12,11 +12,20 @@
 	<!-- All Start -->
 	<servlet>
 		<servlet-name>LoginController</servlet-name>
-		<servlet-class>controller.all.LoginController</servlet-class>
+		<servlet-class>controller.all.LogInController</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LoginController</servlet-name>
 		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>LogOutController</servlet-name>
+		<servlet-class>controller.all.LogOutController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LogOutController</servlet-name>
+		<url-pattern>/logout</url-pattern>
 	</servlet-mapping>
 	<!-- All End -->
 
@@ -108,13 +117,23 @@
 
 	<!-- Client Start -->
 	<servlet>
-		<servlet-name>ClientHome</servlet-name>
+		<servlet-name>ClientHomeController</servlet-name>
 		<servlet-class>controller.client.HomeController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>ClientHome</servlet-name>
+		<servlet-name>ClientHomeController</servlet-name>
 		<url-pattern>/home</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ClientRegisterController</servlet-name>
+		<servlet-class>controller.client.RegisterController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ClientRegisterController</servlet-name>
+		<url-pattern>/register</url-pattern>
+	</servlet-mapping>
+	
 	<!-- Client End -->
 
 	<!-- CKFinder Start -->

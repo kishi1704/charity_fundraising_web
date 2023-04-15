@@ -17,51 +17,35 @@ import util.PasswordCreation;
 /**
  * Servlet implementation class EntryController
  */
-public class LoginController extends HttpServlet {
+public class LogInController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LoginController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-    
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
-		request.setCharacterEncoding("UTF-8");
-		
-		request.getRequestDispatcher(response.encodeURL("/client/login.jsp")).forward(request, response);
+	public LogInController() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
-		request.setCharacterEncoding("UTF-8");
-
+	private void doLogin(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
-			
+
 			UserDAO userDAO = new UserDAO();
 			User user = userDAO.get(username, PasswordCreation.encodePassword(password));
-			
+
 			HttpSession session = request.getSession();
-			if(user != null) {
+			if (user != null) {
 				session.setAttribute("user", user);
-				if(user.getRole() == 1) {
+				if (user.getRole() == 1) {
 					response.sendRedirect(response.encodeRedirectURL(request.getContextPath()));
-				}else {
+				} else {
 					response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/admin"));
 				}
-			}else {
+			} else {
 				request.setAttribute("username", username);
 				request.setAttribute("password", password);
 				request.setAttribute("loginStatus", 0);
@@ -69,8 +53,32 @@ public class LoginController extends HttpServlet {
 			}
 
 		} catch (Exception e) {
-			Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, e);
 		}
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("UTF-8");
+
+		request.getRequestDispatcher(response.encodeURL("/client/login.jsp")).forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		
+		doLogin(request, response);
 	}
 
 }

@@ -28,14 +28,13 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
 <!--Custom javascript -->
-<script src="${pageContext.request.contextPath}/admin/js/user.js"></script>
+<script src="<c:url value="/admin/js/user.js"/>"></script>
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
 <!-- Custom css -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/admin/css/user.css">
+<link rel="stylesheet" href="<c:url value="/admin/css/user.css"/>">
 </head>
 <body>
 	<div class="container-fluid p-0">
@@ -112,8 +111,8 @@
 											<button type="button" class="btn-view btn btn-info btn-sm"
 												value="${user.id}">Xem</button>
 											<button type="button" class="btn-edit btn btn-warning btn-sm"
-												value="${user.id}">Sửa</button> 
-											<c:if test="${sessionScope.user.id != user.id}">
+												value="${user.id}">Sửa</button> <c:if
+												test="${sessionScope.user.id != user.id}">
 												<button type="button"
 													class="btn btn-danger btn-sm btn-delete" value="${user.id}"
 													data-bs-target="#confirmModal" data-bs-toggle="modal">Xóa</button>
@@ -133,7 +132,7 @@
 
 			<!-- Import confirm modal -->
 			<c:import url="../layout/confirmModal.jsp"></c:import>
-			
+
 			<div class="Page-navigation mt-4">
 				<nav>
 					<ul class="pagination justify-content-center">

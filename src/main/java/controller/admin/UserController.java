@@ -259,18 +259,14 @@ public class UserController extends HttpServlet {
 		try {
 
 			String username = request.getParameter("username");
-			String userRoleStr = request.getParameter("userRole");
-			int userRole = Integer.parseInt(userRoleStr);
-
 			String userFullName = request.getParameter("userFullName");
 			String userPhoneNumber = request.getParameter("userPhoneNumber");
 			String userEmail = request.getParameter("userEmail");
 			String userAddress = request.getParameter("userAddress");
-			String userStatus = request.getParameter("userStatus");
 			
 			UserDAO userDAO = new UserDAO();
-			User user = new User(username, userRole, userFullName, userEmail, userAddress, userPhoneNumber,
-					userStatus);
+			User user = new User(username, 2, userFullName, userEmail, userAddress, userPhoneNumber,
+					"Enable");
 			
 			HttpSession session = request.getSession();
 			if(userDAO.isExistUser(username, userEmail)) {
@@ -299,7 +295,7 @@ public class UserController extends HttpServlet {
 			}
 			
 		} catch (Exception e) {
-			Logger.getLogger(FoundationController.class.getName()).log(Level.SEVERE, null, e);
+			Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
 	

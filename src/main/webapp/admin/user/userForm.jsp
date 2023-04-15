@@ -28,14 +28,13 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
 <!--Custom javascript -->
-<script src="${pageContext.request.contextPath}/admin/js/userForm.js"></script>
+<script src="<c:url value="/admin/js/userForm.js"/>"></script>
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
 <!-- Custom css -->
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/admin/css/user.css">
+<link rel="stylesheet" href="<c:url value="/admin/css/user.css"/>">
 </head>
 <body>
 	<div class="container-fluid p-0">
@@ -70,32 +69,24 @@
 						<div class="invalid-feedback">Dữ liệu không đúng!</div>
 					</div>
 
-					<div class="form-group">
-						<label class="form-label">Vai trò</label>
-						<c:choose>
-							<c:when test="${sessionScope.userAction == 'edit'}">
-								<select id="user-role" class="form-select w-15" name="userRole"
-									${sessionScope.userEdit.role == 2 ? 'disabled' : ''}>
-									<c:forEach var="role" items="${sessionScope.roleList}">
-										<c:choose>
-											<c:when test="${role.key == sessionScope.userEdit.role}">
-												<option value="${role.key}" selected>${role.value}</option>
-											</c:when>
-											<c:otherwise>
-												<option value="${role.key}">${role.value}</option>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-								</select>
-							</c:when>
-							<c:when test="${sessionScope.userAction == 'add'}">
-								<select id="user-role" class="form-select w-15" name="userRole"
-									disabled>
-									<option value="2" selected>Admin</option>
-								</select>
-							</c:when>
-						</c:choose>
-					</div>
+					<c:if test="${sessionScope.userAction == 'edit'}">
+						<div class="form-group">
+							<label class="form-label">Vai trò</label> <select id="user-role"
+								class="form-select w-15" name="userRole"
+								${sessionScope.userEdit.role == 2 ? 'disabled' : ''}>
+								<c:forEach var="role" items="${sessionScope.roleList}">
+									<c:choose>
+										<c:when test="${role.key == sessionScope.userEdit.role}">
+											<option value="${role.key}" selected>${role.value}</option>
+										</c:when>
+										<c:otherwise>
+											<option value="${role.key}">${role.value}</option>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+							</select>
+						</div>
+					</c:if>
 
 					<div class="form-group has-validation">
 						<label class="form-label">Họ và tên</label> <input
@@ -130,20 +121,22 @@
 						<div class="invalid-feedback">Dữ liệu không đúng!</div>
 					</div>
 
-					<div class="form-group">
-						<label class="form-label">Trạng thái</label> <select
-							id="user-status" class="form-select w-15" name="userStatus"
-							${sessionScope.user.role == sessionScope.userEdit.role ? 'disabled' : ''}>
-							<c:forEach var="status" items="${sessionScope.statusList}">
-								<c:if test="${sessionScope.userEdit.status == status}">
-									<option selected>${status}</option>
-								</c:if>
-								<c:if test="${sessionScope.userEdit.status != status}">
-									<option class="">${status}</option>
-								</c:if>
-							</c:forEach>
-						</select>
-					</div>
+					<c:if test="${sessionScope.userAction == 'edit'}">
+						<div class="form-group">
+							<label class="form-label">Trạng thái</label> <select
+								id="user-status" class="form-select w-15" name="userStatus"
+								${sessionScope.user.role == sessionScope.userEdit.role ? 'disabled' : ''}>
+								<c:forEach var="status" items="${sessionScope.statusList}">
+									<c:if test="${sessionScope.userEdit.status == status}">
+										<option selected>${status}</option>
+									</c:if>
+									<c:if test="${sessionScope.userEdit.status != status}">
+										<option class="">${status}</option>
+									</c:if>
+								</c:forEach>
+							</select>
+						</div>
+					</c:if>
 					<div class="form-group my-5">
 						<button type="submit" class="btn-save btn btn-primary me-1">
 							<i class="fa-solid fa-floppy-disk"></i> Lưu
@@ -163,11 +156,11 @@
 						<div class="modal-content">
 							<div class="modal-body text-center">
 								<h6>Thêm tài khoản Admin thành công!</h6>
-								<h6 class="text-danger">Mật khẩu tài khoản được gửi thông qua mail đăng ký. Vui
-									lòng kiểm tra mail để lấy mật khẩu</h6>
+								<h6 class="text-danger">Mật khẩu tài khoản được gửi thông
+									qua mail đăng ký. Vui lòng kiểm tra mail để lấy mật khẩu</h6>
 								<div class="mt-4">
-									<a href="${pageContext.request.contextPath}/admin/user" class="btn btn-primary" tabindex="-1"
-										role="button">Đóng</a>
+									<a href="${pageContext.request.contextPath}/admin/user"
+										class="btn btn-primary" tabindex="-1" role="button">Đóng</a>
 								</div>
 							</div>
 						</div>
@@ -182,7 +175,7 @@
 					<p>Vui lòng kiểm tra lại dữ liệu và thử lại!</p>
 					<hr class="m-1">
 					<p class="mb-0 fst-italic">
-						<i class="fa-solid fa-circle-exclamation"></i> Tên hiển thị không
+						<i class="fa-solid fa-circle-exclamation"></i> Tên đăng nhập không
 						được trùng lặp.
 					</p>
 					<p class="mb-0 fst-italic">
