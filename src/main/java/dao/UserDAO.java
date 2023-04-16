@@ -324,6 +324,11 @@ public class UserDAO implements BaseDAO<User> {
 
 	// Is exists user
 	public boolean isExistUser(String username, String email) {
+		return isExistUser(username, email, -1);
+	}
+	
+	
+	public boolean isExistUser(String username, String email, int id) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -331,12 +336,22 @@ public class UserDAO implements BaseDAO<User> {
 		int count = 0;
 		try {
 			conn = new DBContext().getConnection();
+			String sql = null;
+			
+			if(id == -1) {
+				sql = "select count(*) as count from tblUser where username = ? or user_email = ?;";
+				
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, username);
+				stmt.setString(2, email);
+			} else {
+				sql = "select count(*) as count from tblUser where (username = ? or user_email = ?) and user_id != ?;";
 
-			String sql = "select count(*) as count from tblUser where username = ? or user_email = ?;";
-
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, username);
-			stmt.setString(2, email);
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, username);
+				stmt.setString(2, email);
+				stmt.setInt(3, id);
+			}
 
 			rs = stmt.executeQuery();
 

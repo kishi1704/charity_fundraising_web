@@ -28,10 +28,10 @@
 					</button>
 					<ul class="dropdown-menu" aria-labelledby="userDropdownMenu">
 						<li><a class="dropdown-item"
-							href="${pageContext.request.contextPath}/user">Thông tin cá
+							href="${pageContext.request.contextPath}/user?action=getInfo">Thông tin cá
 								nhân</a></li>
 						<li><a class="dropdown-item"
-							href="${pageContext.request.contextPath}/donationhistory">Lịch
+							href="${pageContext.request.contextPath}/user?action=getDonation">Lịch
 								sử quyên góp</a></li>
 						<li><a class="dropdown-item"
 							href="${pageContext.request.contextPath}/user/change_password">Thay

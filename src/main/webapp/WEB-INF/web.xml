@@ -143,6 +143,15 @@
 		<url-pattern>/register</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>ClientUserController</servlet-name>
+		<servlet-class>controller.client.UserController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ClientUserController</servlet-name>
+		<url-pattern>/user</url-pattern>
+	</servlet-mapping>
+	
 	<!-- Client End -->
 
 	<!-- CKFinder Start -->
