@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import dao.UserDAO;
 import model.User;
 import util.PasswordCreation;
+import util.UserAction;
 
 /**
  * Servlet implementation class EntryController
@@ -56,6 +57,40 @@ public class LogInController extends HttpServlet {
 			Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
+	
+	private void doResetPw(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+
+			String username = request.getParameter("username");
+			String userEmail = request.getParameter("userEmail");
+			
+			UserDAO userDAO = new UserDAO();
+			
+			if(userDAO.isExistUser(username, userEmail)) {
+				String password = PasswordCreation.generateRandomPassword(8);
+				User user = new User(username, PasswordCreation.encodePassword(password), userEmail);
+				
+				boolean isSuccessSending = UserAction.sendPasswordResetMail(user, password);
+				
+				if(isSuccessSending && userDAO.updatePassword(user)) {
+					request.setAttribute("verifyModalAction", "show");
+					
+				}else {
+					request.setAttribute("resetPwStatus", 0);
+				}
+			}else {
+				request.setAttribute("resetPwStatus", 0);
+			}
+			
+			request.setAttribute("username", username);
+			request.setAttribute("userEmail", userEmail);
+			request.getRequestDispatcher(response.encodeURL("/client/forgetPassword.jsp")).forward(request, response);
+			
+		} catch (Exception e) {
+			Logger.getLogger(LogInController.class.getName()).log(Level.SEVERE, null, e);
+		}
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -66,7 +101,13 @@ public class LogInController extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
 
-		request.getRequestDispatcher(response.encodeURL("/client/login.jsp")).forward(request, response);
+		String action = request.getParameter("action");
+		if(action == null) {
+			request.getRequestDispatcher(response.encodeURL("/client/login.jsp")).forward(request, response);
+		}else if(action.equals("resetpw")) {
+			request.getRequestDispatcher(response.encodeURL("/client/forgetPassword.jsp")).forward(request, response);
+		}
+		
 	}
 
 	/**
@@ -78,7 +119,12 @@ public class LogInController extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		
-		doLogin(request, response);
+		String action = request.getParameter("action");
+		if(action == null) {
+			doLogin(request, response);
+		}else if(action.equals("resetpw")) {
+			doResetPw(request, response);
+		}
 	}
 
 }

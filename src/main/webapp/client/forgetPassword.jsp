@@ -1,6 +1,6 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,13 +22,14 @@
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-	
+
 <!-- Customer JavaScript -->
-<script src="<c:url value="/client/js/register.js"/>"></script>
+<script src="<c:url value="/client/js/forgetpw.js"/>"></script>
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-<title>Đăng ký tài khoản</title>
+
+<title>Quên mật khẩu</title>
 </head>
 <body>
 	<section class="vh-100">
@@ -45,56 +46,36 @@
 							<div class="col-md-6 col-lg-7 d-flex">
 								<div class="card-body p-3 text-black">
 									<form method="post" action="" accept-charset="UTF-8">
-
 										<div class="mb-2">
 											<img
 												src='<c:url value = "/images/background/client_background.jpg"/>'
 												alt="login form" class="img-fluid" />
 										</div>
+										<p class="text-danger fs-4">Vui lòng nhập tên đăng nhập và
+											email đăng ký để tạo mật khẩu mới</p>
+										<div class="form-outline mb-4">
+											<label class="form-label fs-5">Tên đăng nhập</label> <input
+												type="text" name="username" value="${requestScope.username}"
+												id="username" class="form-control form-control-lg" />
+										</div>
 
 										<div class="form-outline mb-2">
-											<label class="form-label" for="username">Họ và tên</label> <input
-												type="text" name="userFullName"
-												value="${requestScope.userFullName}" id="user-fullname"
+											<label class="form-label fs-5">Email</label> <input
+												type="text" name="userEmail"
+												value="${requestScope.userEmail}" id="user-email"
 												class="form-control form-control-lg" />
 											<div class="invalid-feedback">Dữ liệu không đúng!</div>
 										</div>
 
-										<div class="form-outline mb-2">
-											<label class="form-label" for="username">Tên đăng
-												nhập</label> <input type="text" name="username"
-												value="${requestScope.username}" id="username"
-												class="form-control form-control-lg" />
-											<div class="invalid-feedback">Dữ liệu không đúng!</div>
-										</div>
-
-										<div class="form-outline mb-2">
-											<label class="form-label">Email</label> <input type="text"
-												name="userEmail" value="${requestScope.userEmail}"
-												id="user-email" class="form-control form-control-lg" />
-											<div class="invalid-feedback">Dữ liệu không đúng!</div>
-										</div>
-										<div class="form-outline mb-2">
-											<label class="form-label">Số điện thoại</label> <input
-												type="text" name="userPhoneNumber"
-												value="${requestScope.userPhoneNumber}"
-												id="user-phone-number" class="form-control form-control-lg" />
-											<div class="invalid-feedback">Dữ liệu không đúng!</div>
-										</div>
-										<div class="form-outline mb-2">
-											<label class="form-label">Địa chỉ</label> <input type="text"
-												name="userAddress" value="${requestScope.userAddress}"
-												id="user-address" class="form-control form-control-lg" />
-											<div class="invalid-feedback">Dữ liệu không đúng!</div>
-										</div>
-
+										<c:if test="${requestScope.resetPwStatus == 0}">
+											<div class="alert alert-danger">Tên đăng nhập hoặc
+												email không chính xác</div>
+										</c:if>
 										<div class="pt-1 mb-4">
-											<button class="btn-register btn btn-success btn-block"
-												type="submit" value="Login">Đăng ký</button>
+											<button class="btn-reset-pw btn btn-success btn-block fs-5"
+												type="submit" value="Login">Gửi</button>
 										</div>
-
 										<div>
-
 											<p class="mb-0" style="color: #393f81;">
 												Đã có tài khoản? <a class="text-decoration-none"
 													href="<c:url value="/login" />">Đăng nhập ở đây.</a>
@@ -105,22 +86,7 @@
 											</p>
 										</div>
 									</form>
-									
-									<c:if test="${requestScope.registerStatus == 0}">
-										<div class="alert alert-danger mx-2 mt-3" role="alert">
-											<h5 class="alert-heading">Đăng ký thất bại!</h5>
-											<p>Vui lòng kiểm tra lại dữ liệu và thử lại!</p>
-											<hr class="m-1">
-											<p class="mb-0 fst-italic">
-												<i class="fa-solid fa-circle-exclamation"></i> Tên đăng nhập
-												không được trùng lặp.
-											</p>
-											<p class="mb-0 fst-italic">
-												<i class="fa-solid fa-circle-exclamation"></i> Email không
-												được trùng lặp.
-											</p>
-										</div>
-									</c:if>
+
 								</div>
 							</div>
 						</div>
@@ -128,14 +94,13 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="modal fade" id="verifyModal" role="dialog"
 			data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
 			<div
 				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 				<div class="modal-content">
 					<div class="modal-body text-center">
-						<h6>Đăng ký tài khoản thành công!</h6>
+						<h6>Thay đổi mật khẩu thành công!</h6>
 						<h6 class="text-danger">Mật khẩu tài khoản được gửi thông qua
 							mail đăng ký. Vui lòng kiểm tra mail để lấy mật khẩu và đăng nhập</h6>
 						<div class="mt-4">
@@ -147,7 +112,6 @@
 			</div>
 		</div>
 	</section>
-
 	<script>
 		// Verify when register success
 		$(document).ready(function() {

@@ -1,7 +1,6 @@
 package util;
 
 import java.util.Properties;
-
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -46,7 +45,7 @@ public class MailAction {
 			message.setText(msg);
 			message.setContent(msg, "text/html; charset=UTF-8");
 			Transport.send(message);
-			System.out.println("Done");
+			System.out.println("Send Email Success");
 		
 		}catch (MessagingException e) {
 			e.printStackTrace();

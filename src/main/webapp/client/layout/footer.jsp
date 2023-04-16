@@ -34,7 +34,7 @@
 			</ul>
 		</div>
 
-		<div class="col-12 col-md-4 text-center">
+		<div id="our-contact" class="col-12 col-md-4 text-center">
 			<h5>Địa chỉ liên hệ</h5>
 			<ul class="nav flex-column text-white px-2">
 				<li>Địa chỉ : Số nhà 41/7, đường Trương Phước Phan, phường Bình Trị Đông, quận Bình Tân, tp.Hồ Chí Minh</li>

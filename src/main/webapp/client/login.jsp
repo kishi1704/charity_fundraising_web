@@ -23,6 +23,9 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
+<!-- Customer JavaScript -->
+<script src="<c:url value="/client/js/login.js"/>"></script>
+
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
@@ -42,7 +45,7 @@
 							</div>
 							<div class="col-md-6 col-lg-7 d-flex">
 								<div class="card-body p-3 text-black">
-									<form method="post" action="login" accept-charset="UTF-8">
+									<form method="post" action="" accept-charset="UTF-8">
 										<div class="mb-2">
 											<img
 												src='<c:url value = "/images/background/client_background.jpg"/>'
@@ -51,25 +54,30 @@
 										<div class="form-outline mb-4">
 											<label class="form-label fs-5">Tên đăng nhập</label> <input
 												type="text" name="username" value="${requestScope.username}"
-												class="form-control form-control-lg" />
+												id="username" class="form-control form-control-lg" />
+											<div class="invalid-feedback">Dữ liệu không đúng!</div>
 										</div>
 
 										<div class="form-outline mb-4">
 											<label class="form-label fs-5">Mật khẩu</label> <input
-												type="password" name="password" value="${requestScope.password}"
+												type="password" name="password"
+												value="${requestScope.password}" id="password"
 												class="form-control form-control-lg" />
+											<div class="invalid-feedback">Dữ liệu không đúng!</div>
 										</div>
 										<c:if test="${requestScope.loginStatus == 0}">
 											<div class="alert alert-danger">Tên đăng nhập hoặc mật
 												khẩu không chính xác</div>
 										</c:if>
 										<div class="pt-1 mb-4">
-											<button class="btn btn-success btn-block fs-5" type="submit"
-												value="Login">Login</button>
+											<button class="btn-login btn btn-success btn-block fs-5"
+												type="submit" value="Login">Đăng nhập</button>
 										</div>
 										<div>
-											<a class="link-secondary text-decoration-none"
-												href="<c:url value="/forget_password" />">Quên <span class="text-primary">mật khẩu</span> ?</a>
+											<a class="text-decoration-none" style="color: #393f81;"
+												href="<c:url value="/login?action=resetpw" />">Quên <span
+												class="text-primary">mật khẩu</span> ?
+											</a>
 											<p class="mb-0" style="color: #393f81;">
 												Chưa có tài khoản? <a class="text-decoration-none"
 													href="<c:url value="/register" />">Đăng ký ở đây</a>

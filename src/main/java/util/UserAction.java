@@ -25,8 +25,8 @@ public class UserAction {
 	
 	public static boolean sendPasswordResetMail(User u, String newPassword) {
 		MailAction mailAction = new MailAction(MailAction.SMTP_GMAIL_USERNAME, MailAction.SMTP_GMAIL_PASSWORD);
-		String content="Xin chào ,mật khẩu mới cho tài khoản "+u.getUsername()+" là :"+newPassword;
-		mailAction.sendMessage(MailAction.SMTP_GMAIL_USERNAME,u.getEmail(),"Thay đổi mật khẩu", content);
+		String content="Xin chào ,mật khẩu mới cho tài khoản " + u.getUsername() + " là :" + newPassword;
+		mailAction.sendMessage(MailAction.SMTP_GMAIL_USERNAME, u.getEmail(), "Thay đổi mật khẩu", content);
 		return true;
 	}
 }

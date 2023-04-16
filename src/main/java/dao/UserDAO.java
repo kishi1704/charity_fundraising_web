@@ -353,5 +353,39 @@ public class UserDAO implements BaseDAO<User> {
 			DBContext.close(conn, stmt, rs);
 		}
 	}
+	
+	// Update Password
+	public boolean updatePassword(User u) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		boolean flag = false;
+		try {
+			conn = new DBContext().getConnection();
+			String sql = "update tblUser\r\n"
+					+ "set password = ?\r\n"
+					+ "where username = ? and user_email = ?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, u.getPassword());
+			stmt.setString(2, u.getUsername());
+			stmt.setString(3, u.getEmail());
+			
+
+			int affectedRows = stmt.executeUpdate();
+
+			if (affectedRows == 0) {
+				throw new SQLException("Update password failed");
+			} else {
+				flag = true;
+			}
+
+			return flag;
+		} catch (Exception e) {
+			Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, e);
+			return flag;
+		} finally {
+			DBContext.close(conn, stmt, null);
+		}
+	}
 
 }

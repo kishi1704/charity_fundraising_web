@@ -21,10 +21,31 @@ public class HomeController extends HttpServlet {
 
 	}
 	
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	private void goHome(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
 		request.getRequestDispatcher(response.encodeURL("/client/index.jsp")).forward(request, response);
+	}
+	
+
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void goAbout(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		request.getRequestDispatcher(response.encodeURL("/client/aboutOur.jsp")).forward(request, response);
 	}
 
 	/**
@@ -40,6 +61,8 @@ public class HomeController extends HttpServlet {
 
 		if (action == null || action.equals("home")) {
 			goHome(request, response);
+		}else if(action.equals("about")) {
+			goAbout(request, response);
 		}
 	}
 

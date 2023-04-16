@@ -10,7 +10,7 @@
 				alt="website background image" width="500rem">
 		</div>
 		<c:choose>
-			<c:when test="${empty sessionScope.user}">
+			<c:when test="${empty sessionScope.user || sessionScope.user.role == 2 }">
 				<nav
 					class="nav col-12 col-md-6 justify-content-center justify-content-md-end fs-5">
 					<a href="<c:url value="/login"/>"
@@ -41,9 +41,6 @@
 					</ul>
 				</div>
 			</c:when>
-			<c:when test="${sessionScope.user.role == 2 }">
-				 <c:redirect url="https://www.dineshonjava.com"></c:redirect>
-			</c:when>
 		</c:choose>
 	</header>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-success">
@@ -73,9 +70,9 @@
 					<li class="nav-item"><a class="nav-link"
 						href="${pageContext.request.contextPath}/foundation"><i
 							class="fa-solid fa-people-group"></i> Nhà tổ chức</a></li>
-					<li class="nav-item"><a class="nav-link " href="#"><i
+					<li class="nav-item"><a class="nav-link " href="#our-contact"><i
 							class="fa-sharp fa-solid fa-address-card"></i> Liên hệ</a></li>
-					<li class="nav-item"><a class="nav-link " href="#"><i
+					<li class="nav-item"><a class="nav-link " href="<c:url value="/home?action=about"/>"><i
 							class="fa-solid fa-circle-info"></i> Về chúng tôi</a></li>
 				</ul>
 				<form class="d-flex w-auto">

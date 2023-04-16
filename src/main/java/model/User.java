@@ -39,6 +39,10 @@ public class User {
 			String status) {
 		this(-1, username, null, role, fullName, email, address, phoneNumber, status);
 	}
+	
+	public User(String username, String password, String email) {
+		this(-1, username, password, -1, null, email, null, null, null);
+	}
 
 	public User(int id, String username, String password, int role, String fullName, String email, String address,
 			String phoneNumber, String status) {
