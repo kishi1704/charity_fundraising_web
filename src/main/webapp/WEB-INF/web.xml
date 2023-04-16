@@ -27,6 +27,15 @@
 		<servlet-name>LogOutController</servlet-name>
 		<url-pattern>/logout</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ChangePasswordController</servlet-name>
+		<servlet-class>controller.all.ChangePasswordController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChangePasswordController</servlet-name>
+		<url-pattern>/user/change_password</url-pattern>
+	</servlet-mapping>
 	<!-- All End -->
 
 	<!-- Admin Start -->

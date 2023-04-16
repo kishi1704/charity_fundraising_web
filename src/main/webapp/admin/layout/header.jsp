@@ -90,7 +90,7 @@
 			href="${pageContext.request.contextPath}/admin?action=user"
 			id="admin-user" class="list-group-item list-group-item-action py-3"><i
 			class="fa-solid fa-users"></i> <span class="ms-1 d-none d-md-inline">Tài
-				khoản</span></a> <a href="${pageContext.request.contextPath}/logout"
+				khoản</span></a> <a href="${pageContext.request.contextPath}/user/change_password"
 			class="list-group-item list-group-item-action py-3 fs-6"><i class="fa-solid fa-key"></i> <span
 			class="ms-1 d-none d-md-inline">Thay đổi mật khẩu</span></a> <a
 			href="${pageContext.request.contextPath}/logout"

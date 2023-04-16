@@ -34,7 +34,7 @@
 							href="${pageContext.request.contextPath}/donationhistory">Lịch
 								sử quyên góp</a></li>
 						<li><a class="dropdown-item"
-							href="${pageContext.request.contextPath}/password?action=changepassword">Thay
+							href="${pageContext.request.contextPath}/user/change_password">Thay
 								đổi mật khẩu</a></li>
 						<li><a class="dropdown-item"
 							href="<c:url value="/logout"/>">Đăng xuất</a></li>
