@@ -40,7 +40,7 @@
 					<div class="card m-1">
 						<img
 							src="<c:url value = "/images/background/client_background.jpg"/>"
-							class="card-img-top" alt="website logo">
+							class="mx-auto d-none d-md-block" width="600" alt="website logo">
 						<div class="card-body fs-5">
 							<h4 class="card-title text-uppercase text-center text-success">Thông
 								tin cá nhân</h4>

@@ -89,6 +89,12 @@
 									</c:choose>
 								</tbody>
 							</table>
+
+							<div class="mt-2">
+								<a class="btn btn-secondary" href="<c:url value="/home" />">Quay
+									lại</a>
+
+							</div>
 						</div>
 					</div>
 				</div>
