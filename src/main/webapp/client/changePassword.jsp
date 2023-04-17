@@ -32,7 +32,7 @@
 <title>Thay đổi mật khẩu</title>
 </head>
 <body>
-	<section class="vh-100">
+	<main class="vh-100">
 		<div class="container py-3 h-100">
 			<div
 				class="row d-flex justify-content-center align-items-center h-100">
@@ -114,7 +114,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</main>
 	<script>
 		// Verify when register success
 		$(document).ready(function() {

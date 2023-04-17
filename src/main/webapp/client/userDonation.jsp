@@ -33,7 +33,7 @@
 <title>Lịch sử quyên góp</title>
 </head>
 <body>
-	<section class="vh-100">
+	<main class="vh-100">
 		<div class="container py-3 h-100">
 			<div
 				class="row d-flex justify-content-center align-items-center h-100">
@@ -102,7 +102,7 @@
 			<!-- Show modal to view detail donation -->
 			<div class="donation-modal"></div>
 		</div>
-	</section>
+	</main>
 	<script>
 		// view donation
 		$(document).ready(function() {
