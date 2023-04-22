@@ -14,6 +14,8 @@ import java.util.logging.Logger;
 import context.DBContext;
 import controller.admin.DonationController;
 import model.Donation;
+import model.Fund;
+import model.User;
 
 /**
  * @author TRUONGVANTIEN
@@ -128,8 +130,9 @@ public class DonationDAO implements BaseDAO<Donation> {
 
 			while (rs.next()) {
 				Donation c = new Donation(rs.getInt("donation_id"), rs.getInt("donation_amount"),
-						rs.getString("donation_mess"), rs.getDate("donation_date"), rs.getInt("user_id"),
-						rs.getString("username"), rs.getInt("fund_id"), rs.getString("fund_name"));
+						rs.getString("donation_mess"), rs.getDate("donation_date"),
+						new User(rs.getInt("user_id"), rs.getString("username")),
+						new Fund(rs.getInt("fund_id"), rs.getString("fund_name")));
 
 				donations.add(c);
 			}
@@ -161,8 +164,8 @@ public class DonationDAO implements BaseDAO<Donation> {
 			rs = stmt.executeQuery();
 			if (rs.next()) {
 				c = new Donation(rs.getInt("donation_id"), rs.getInt("donation_amount"), rs.getString("donation_mess"),
-						rs.getDate("donation_date"), rs.getInt("user_id"), rs.getString("username"),
-						rs.getInt("fund_id"), rs.getString("fund_name"));
+						rs.getDate("donation_date"), new User(rs.getInt("user_id"), rs.getString("username")),
+						new Fund(rs.getInt("fund_id"), rs.getString("fund_name")));
 			}
 
 			return c;
@@ -191,8 +194,8 @@ public class DonationDAO implements BaseDAO<Donation> {
 			Donation c = null;
 			while (rs.next()) {
 				c = new Donation(rs.getInt("donation_id"), rs.getInt("donation_amount"), rs.getString("donation_mess"),
-						rs.getDate("donation_date"), rs.getInt("user_id"), rs.getString("username"),
-						rs.getInt("fund_id"), rs.getString("fund_name"));
+						rs.getDate("donation_date"), new User(rs.getInt("user_id"), rs.getString("username")),
+						new Fund(rs.getInt("fund_id"), rs.getString("fund_name")));
 				donations.add(c);
 			}
 

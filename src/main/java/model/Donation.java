@@ -14,35 +14,21 @@ public class Donation {
 	private int donationAmount;
 	private String donationMessage;
 	private Date donationDate;
-	private int userId;
-	private String username;
-	private int fundId;
-	private String fundname;
+	private User user;
+	private Fund fund;
 	
 	public Donation() {
 		
 	}
 
-	
-	
-
-	public Donation(int id, int donationAmount, String donationMessage, Date donationDate, int userId, int fundId) {
-		this(id, donationAmount, donationMessage, donationDate, userId, null, fundId, null);
-	}
-
-
-
-
-	public Donation(int id, int donationAmount, String donationMessage, Date donationDate, int userId, String username,
-			int fundId, String fundname) {
+	public Donation(int id, int donationAmount, String donationMessage, Date donationDate, User user,
+			Fund fund) {
 		this.id = id;
 		this.donationAmount = donationAmount;
 		this.donationMessage = donationMessage;
 		this.donationDate = donationDate;
-		this.userId = userId;
-		this.username = username;
-		this.fundId = fundId;
-		this.fundname = fundname;
+		this.user = user;
+		this.fund = fund;
 	}
 
 
@@ -71,21 +57,7 @@ public class Donation {
 		this.donationMessage = donationMessage;
 	}
 
-	public int getFundId() {
-		return fundId;
-	}
-
-	public void setFundId(int fundId) {
-		this.fundId = fundId;
-	}
-
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
+	
 
 	public Date getDonationDate() {
 		return donationDate;
@@ -95,34 +67,20 @@ public class Donation {
 		this.donationDate = donationDate;
 	}
 
-
-
-
-	public String getUsername() {
-		return username;
+	public User getUser() {
+		return user;
 	}
 
-
-
-
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-
-
-
-	public String getFundname() {
-		return fundname;
+	public Fund getFund() {
+		return fund;
 	}
 
-
-
-
-	public void setFundname(String fundname) {
-		this.fundname = fundname;
+	public void setFund(Fund fund) {
+		this.fund = fund;
 	}
-	
-	
-	
+
 }

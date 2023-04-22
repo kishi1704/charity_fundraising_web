@@ -26,6 +26,13 @@ public class Fund {
 		
 	}
 	
+	public Fund(int id, String name) {
+		this(id, name, null,  null, null, -1,  null,  null,  null,  null, null);
+	}
+
+	public Fund(int id, String name, String image_url) {
+		this(id, name, null,  null, image_url, -1,  null,  null,  null,  null, null);
+	}
 
 	public Fund(String name, String description, String content, String image_url, int expectedAmount,
 			Date createdDate, Date endDate,  Category category, Foundation foundation, String status) {

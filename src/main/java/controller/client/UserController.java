@@ -168,7 +168,7 @@ public class UserController extends HttpServlet {
 						+ "						<div class=\"form-group\">\r\n"
 						+ "							<label class=\"form-label\">Quỹ quyên góp</label> <input\r\n"
 						+ "								id=\"donation-fundname\" type=\"text\" class=\"form-control\"\r\n"
-						+ "								value=\"" + donation.getFundname() + "\" readonly\r\n"
+						+ "								value=\"" + donation.getFund().getName() + "\" readonly\r\n"
 						+ "								name=\"donationFundname\">\r\n"
 						+ "						</div>\r\n"
 						+ "					</form>\r\n"

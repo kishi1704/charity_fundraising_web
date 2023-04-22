@@ -24,6 +24,11 @@ public class User {
 	
 	
 
+	public User(int id, String username) {
+		this(id, username, null, -1, null, null, null, null, null);
+	}
+
+
 	public User(int id, String username, int role, String fullName, String email, String address, String phoneNumber,
 			String status) {
 		this(id, username, null, role, fullName, email, address, phoneNumber, status);

@@ -92,10 +92,10 @@
 											class="d-inline-block text-truncate" style="width: 12rem;">
 												${donation.donationMessage}</span></td>
 										<td class="donation-created-date">${donation.donationDate}</td>
-										<td class="donation-username">${donation.username}</td>
+										<td class="donation-username">${donation.user.username}</td>
 										<td class="donation-fundname"><span
 											class="d-inline-block text-truncate" style="width: 12rem;">
-												${donation.fundname}</span></td>
+												${donation.fund.name}</span></td>
 										<td class="function">
 											<button type="button" class="btn-view btn btn-info btn-sm"
 												value="${donation.id}">Xem</button>
