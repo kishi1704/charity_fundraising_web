@@ -18,13 +18,15 @@ import java.util.logging.Logger;
 import context.DBContext;
 import controller.admin.FoundationController;
 import controller.admin.FundController;
+import model.Category;
+import model.Foundation;
 import model.Fund;
 
 /**
  * @author TRUONGVANTIEN
  *
  */
-public class FundDAO implements BaseDAO<Fund>{
+public class FundDAO implements BaseDAO<Fund> {
 
 	// return number of all fund
 	public int countF() throws Exception {
@@ -139,8 +141,9 @@ public class FundDAO implements BaseDAO<Fund>{
 			while (rs.next()) {
 				Fund f = new Fund(rs.getInt("fund_id"), rs.getString("fund_name"), rs.getString("fund_des"),
 						rs.getString("fund_content"), rs.getString("image_url"), rs.getInt("expected_amount"),
-						rs.getDate("start_date"), rs.getDate("end_date"), rs.getInt("category_id"),
-						rs.getString("category_name"), rs.getInt("foundation_id"), rs.getString("foundation_name"),
+						rs.getDate("start_date"), rs.getDate("end_date"),
+						new Category(rs.getInt("category_id"), rs.getString("category_name")),
+						new Foundation(rs.getInt("foundation_id"), rs.getString("foundation_name")),
 						rs.getString("fund_status"));
 
 				funds.add(f);
@@ -174,8 +177,9 @@ public class FundDAO implements BaseDAO<Fund>{
 			if (rs.next()) {
 				f = new Fund(rs.getInt("fund_id"), rs.getString("fund_name"), rs.getString("fund_des"),
 						rs.getString("fund_content"), rs.getString("image_url"), rs.getInt("expected_amount"),
-						rs.getDate("start_date"), rs.getDate("end_date"), rs.getInt("category_id"),
-						rs.getString("category_name"), rs.getInt("foundation_id"), rs.getString("foundation_name"),
+						rs.getDate("start_date"), rs.getDate("end_date"),
+						new Category(rs.getInt("category_id"), rs.getString("category_name")),
+						new Foundation(rs.getInt("foundation_id"), rs.getString("foundation_name")),
 						rs.getString("fund_status"));
 			}
 
@@ -210,8 +214,8 @@ public class FundDAO implements BaseDAO<Fund>{
 			stmt.setInt(5, f.getExpectedAmount());
 			stmt.setDate(6, f.getCreatedDate());
 			stmt.setDate(7, f.getEndDate());
-			stmt.setInt(8, f.getCategoryId());
-			stmt.setInt(9, f.getFoundationId());
+			stmt.setInt(8, f.getCategory().getId());
+			stmt.setInt(9, f.getFoundation().getId());
 			stmt.setString(10, f.getStatus());
 			stmt.setInt(11, f.getId());
 
@@ -253,8 +257,8 @@ public class FundDAO implements BaseDAO<Fund>{
 			stmt.setInt(5, f.getExpectedAmount());
 			stmt.setDate(6, f.getCreatedDate());
 			stmt.setDate(7, f.getEndDate());
-			stmt.setInt(8, f.getCategoryId());
-			stmt.setInt(9, f.getFoundationId());
+			stmt.setInt(8, f.getCategory().getId());
+			stmt.setInt(9, f.getFoundation().getId());
 			stmt.setString(10, f.getStatus());
 
 			int affectedRows = stmt.executeUpdate();
@@ -267,8 +271,8 @@ public class FundDAO implements BaseDAO<Fund>{
 
 			if (rs.next()) {
 				newF = new Fund(rs.getInt(1), f.getName(), f.getDescription(), f.getContent(), f.getImage_url(),
-						f.getExpectedAmount(), f.getCreatedDate(), f.getEndDate(), f.getCategoryId(),
-						f.getFoundationId(), f.getStatus());
+						f.getExpectedAmount(), f.getCreatedDate(), f.getEndDate(), f.getCategory(),
+						f.getFoundation(), f.getStatus());
 			} else {
 				throw new SQLException("Insert fund failed");
 			}
@@ -288,8 +292,8 @@ public class FundDAO implements BaseDAO<Fund>{
 	public boolean delete(int id) {
 		return delete(Integer.toString(id));
 	}
-	
-	public boolean delete(String idStr){
+
+	public boolean delete(String idStr) {
 		Connection conn = null;
 		CallableStatement cstmt = null;
 

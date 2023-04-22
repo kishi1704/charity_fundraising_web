@@ -125,10 +125,10 @@
 										<td class="fund-created-date">${fund.endDate}</td>
 										<td class="fund-foundation"><span
 											class="d-inline-block text-truncate" style="width: 5rem;">
-												${fund.categoryName}</span></td>
+												${fund.category.name}</span></td>
 										<td class="fund-category"><span
 											class="d-inline-block text-truncate" style="width: 5rem;">
-												${fund.foundationName}</span></td>
+												${fund.foundation.name}</span></td>
 										<td class="fund-status">${fund.status}</td>
 										<td class="function">
 											<button type="button" class="btn-view btn btn-info btn-sm"

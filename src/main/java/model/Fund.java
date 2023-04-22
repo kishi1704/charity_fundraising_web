@@ -18,31 +18,22 @@ public class Fund {
 	private int expectedAmount;
 	private Date createdDate;
 	private Date endDate;
-	private int categoryId;
-	private String categoryName;
-	private int foundationId;
-	private String foundationName;
+	private Category category;
+	private Foundation foundation;
 	private String status;
 	
 	public Fund() {
 		
 	}
+	
 
 	public Fund(String name, String description, String content, String image_url, int expectedAmount,
-			Date createdDate, Date endDate, int categoryId, int foundationId, String status) {
-		this(-1, name, description, content, image_url, expectedAmount, createdDate, endDate, categoryId, "", foundationId, "", status);
+			Date createdDate, Date endDate,  Category category, Foundation foundation, String status) {
+		this(-1, name, description, content, image_url, expectedAmount, createdDate, endDate, category, foundation, status);
 	}
 
 	public Fund(int id, String name, String description, String content, String image_url, int expectedAmount,
-			Date createdDate, Date endDate, int categoryId, int foundationId, String status) {
-		this(id, name, description, content, image_url, expectedAmount, createdDate, endDate, categoryId, "", foundationId, "", status);
-	}
-
-
-
-	public Fund(int id, String name, String description, String content, String image_url, int expectedAmount,
-			Date createdDate, Date endDate, int categoryId, String categoryName, int foundationId,
-			String foundationName, String status) {
+			Date createdDate, Date endDate, Category category, Foundation foundation, String status) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -51,10 +42,8 @@ public class Fund {
 		this.expectedAmount = expectedAmount;
 		this.createdDate = createdDate;
 		this.endDate = endDate;
-		this.categoryId = categoryId;
-		this.categoryName = categoryName;
-		this.foundationId = foundationId;
-		this.foundationName = foundationName;
+		this.category = category;
+		this.foundation = foundation;
 		this.status = status;
 	}
 
@@ -123,22 +112,27 @@ public class Fund {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
+	
 
-	public int getCategoryId() {
-		return categoryId;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
-	public int getFoundationId() {
-		return foundationId;
+
+	public Foundation getFoundation() {
+		return foundation;
 	}
 
-	public void setFoundationId(int foundationId) {
-		this.foundationId = foundationId;
+
+	public void setFoundation(Foundation foundation) {
+		this.foundation = foundation;
 	}
+
 
 	public String getStatus() {
 		return status;
@@ -148,30 +142,4 @@ public class Fund {
 		this.status = status;
 	}
 
-
-
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
-
-
-	public String getFoundationName() {
-		return foundationName;
-	}
-
-
-
-	public void setFoundationName(String foundationName) {
-		this.foundationName = foundationName;
-	}
-	
-	
-	
 }

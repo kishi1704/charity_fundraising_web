@@ -17,10 +17,15 @@ public class Foundation {
 	public Foundation() {
 		
 	}
+	
+	public Foundation(int id, String name) {
+		this(id, name, null, null, null);
+	}
 
 	public Foundation(String name, String description, String email, String status) {
 		this(-1, name, description, email, status);
 	}
+	
 	
 	public Foundation(int id, String name, String description, String email, String status) {
 		this.id = id;

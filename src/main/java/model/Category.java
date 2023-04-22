@@ -17,6 +17,15 @@ public class Category {
 		
 	}
 	
+	
+	
+
+	public Category(int id, String name) {
+		this(id, name, null, null);
+	}
+
+
+
 
 	public Category(String name, String description, String status) {
 		this(-1, name, description, status);

@@ -130,7 +130,7 @@
 							<c:forEach var="category" items="${sessionScope.categoryList}">
 								<c:choose>
 									<c:when
-										test="${category.name == sessionScope.fund.categoryName}">
+										test="${category.name == sessionScope.fund.category.name}">
 										<option value="${category.id}" selected>${category.name}</option>
 									</c:when>
 									<c:otherwise>
@@ -150,7 +150,7 @@
 								items="${sessionScope.foundationList}">
 								<c:choose>
 									<c:when
-										test="${foundation.name == sessionScope.fund.foundationName}">
+										test="${foundation.name == sessionScope.fund.foundation.name}">
 										<option value="${foundation.id}" selected>${foundation.name}</option>
 									</c:when>
 									<c:otherwise>

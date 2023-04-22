@@ -218,7 +218,7 @@ public class FundController extends HttpServlet {
 
 			FundDAO fundDAO = new FundDAO();
 			Fund fund = new Fund(fundId, fundName, fundDescription, fundContent, fundImage_url, fundEAmount,
-					createdDate, endDate, categoryId, foundationId, fundStatus);
+					createdDate, endDate, new Category(categoryId, null), new Foundation(foundationId, null), fundStatus);
 
 			boolean isUpdated = fundDAO.update(fund);
 
@@ -303,7 +303,7 @@ public class FundController extends HttpServlet {
 
 			FundDAO fundDAO = new FundDAO();
 			Fund fund = new Fund(fundName, fundDescription, fundContent, fundImage_url, fundEAmount,
-					createdDate, endDate, categoryId, foundationId, fundStatus);
+					createdDate, endDate, new Category(categoryId, null), new Foundation(foundationId, null), fundStatus);
 			
 			Fund insertedFund = fundDAO.insert(fund);
 
@@ -438,13 +438,13 @@ public class FundController extends HttpServlet {
 						+ "							<label class=\"form-label\">Danh mục</label> <input\r\n"
 						+ "								id=\"fund-category\" type=\"text\" class=\"form-control\"\r\n"
 						+ "								name=\"fundCategory\" readonly\r\n"
-						+ "								value=\"" + fund.getCategoryName() + "\">\r\n"
+						+ "								value=\"" + fund.getCategory().getName() + "\">\r\n"
 						+ "						</div>\r\n"
 						+ "						<div class=\"form-group\">\r\n"
 						+ "							<label class=\"form-label\">Nhà tổ chức</label> <input\r\n"
 						+ "								id=\"fund-foundation\" type=\"text\" class=\"form-control\"\r\n"
 						+ "								name=\"fundFoundation\" readonly\r\n"
-						+ "								value=\"" + fund.getFoundationName() + "\">\r\n"
+						+ "								value=\"" + fund.getFoundation().getName() + "\">\r\n"
 						+ "						</div>\r\n"
 						+ "						<div class=\"form-group\">\r\n"
 						+ "							<label class=\"form-label\">Trạng thái</label> <input\r\n"
