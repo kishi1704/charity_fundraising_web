@@ -24,6 +24,8 @@ import model.Foundation;
  *
  */
 public class FoundationDAO implements BaseDAO<Foundation> {
+	
+	private static final String ENABLE_STATUS = "Enable";
 
 	// return number of all foundation
 	public int countF() throws Exception {
@@ -82,11 +84,6 @@ public class FoundationDAO implements BaseDAO<Foundation> {
 
 	}
 
-	// return the list of all foundation
-	public List<Foundation> search() throws Exception {
-		return search(-1, "", "", -1, -1);
-	}
-
 	// return the list of all foundation per page
 	public List<Foundation> search(int index, int pageSize) {
 		return search(-1, "", "", index, pageSize);
@@ -103,12 +100,7 @@ public class FoundationDAO implements BaseDAO<Foundation> {
 			conn = new DBContext().getConnection();
 			String sql = "";
 
-			// search foundation query
-			if ((id == -1) && (index == -1)) {
-				// search all
-				sql = "select * from tblFoundation;";
-				stmt = conn.prepareStatement(sql);
-			} else if ((id == -1) && (name.equals("")) && (email.equals(""))) {
+			if ((id == -1) && (name.equals("")) && (email.equals(""))) {
 
 				// search all per page
 				sql = "with x as ( select ROW_NUMBER() over (order by foundation_id) as r, * from tblFoundation)\r\n"
@@ -184,6 +176,56 @@ public class FoundationDAO implements BaseDAO<Foundation> {
 			Logger.getLogger(FoundationController.class.getName()).log(Level.SEVERE, null, e);
 			return f;
 		} finally {
+			DBContext.close(conn, stmt, rs);
+		}
+	}
+
+	// Get list of foundation
+	
+	public List<Foundation> get() {
+		return get("");
+	}
+	
+	public List<Foundation> get(String status) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		List<Foundation> foundations = new ArrayList<>();
+		try {
+			conn = new DBContext().getConnection();
+			String sql = "";
+
+			// search foundation query
+			if (status != null && status.equals(ENABLE_STATUS)) {
+				// search all enable foundation
+				sql = "select * from tblFoundation where foundation_status = ?;";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, status);
+			} else {
+
+				// search all enable foundation
+				sql = "select * from tblFoundation;";
+				stmt = conn.prepareStatement(sql);
+			}
+
+			// Get results
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Foundation f = new Foundation(rs.getInt("foundation_id"), rs.getString("foundation_name"),
+						rs.getString("foundation_des"), rs.getString("foundation_email"),
+						rs.getString("foundation_status"));
+
+				foundations.add(f);
+			}
+
+			return foundations;
+		} catch (Exception e) {
+			Logger.getLogger(FoundationController.class.getName()).log(Level.SEVERE, null, e);
+			return foundations;
+		} finally {
+			// close connection
 			DBContext.close(conn, stmt, rs);
 		}
 	}
@@ -272,9 +314,7 @@ public class FoundationDAO implements BaseDAO<Foundation> {
 	public boolean delete(int id) {
 		return delete(Integer.toString(id));
 	}
-	
-	
-	
+
 	public boolean delete(String idStr) {
 		Connection conn = null;
 		CallableStatement cstmt = null;

@@ -24,6 +24,8 @@ import model.Category;
  *
  */
 public class CategoryDAO implements BaseDAO<Category> {
+	
+	private static final String ENABLE_STATUS = "Enable";
 
 	// return number of all category
 	public int countC() throws Exception {
@@ -73,11 +75,6 @@ public class CategoryDAO implements BaseDAO<Category> {
 
 	}
 
-	// return the list of all category
-	public List<Category> search() throws Exception {
-		return search(-1, "", -1, -1);
-	}
-
 	// return the list of all category per page
 	public List<Category> search(int index, int pageSize) {
 		return search(-1, "", index, pageSize);
@@ -94,12 +91,7 @@ public class CategoryDAO implements BaseDAO<Category> {
 			conn = new DBContext().getConnection();
 			String sql = "";
 
-			// search category query
-			if ((id == -1) && (index == -1)) {
-				// get all category
-				sql = "select * from tblCategory;";
-				stmt = conn.prepareStatement(sql);
-			} else if ((id == -1) && (name.equals(""))) {
+			if ((id == -1) && (name.equals(""))) {
 
 				// get all category per page
 				sql = "with x as ( select ROW_NUMBER() over (order by category_id) as r, * from tblCategory)\r\n"
@@ -173,6 +165,55 @@ public class CategoryDAO implements BaseDAO<Category> {
 			Logger.getLogger(CategoryController.class.getName()).log(Level.SEVERE, null, e);
 			return c;
 		} finally {
+			DBContext.close(conn, stmt, rs);
+		}
+	}
+
+	// Get list of category
+	public List<Category> get() {
+		return get("");
+	}
+	
+	
+	public List<Category> get(String status) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		List<Category> categories = new ArrayList<>();
+		try {
+			conn = new DBContext().getConnection();
+			String sql = "";
+
+			// search category query
+			if (status != null && status.equals(ENABLE_STATUS)) {
+				// get all enable category
+				sql = "select * from tblCategory where category_status = ?;";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, status);
+			} else {
+
+				// get all category
+				sql = "select * from tblCategory;";
+				stmt = conn.prepareStatement(sql);
+			} 
+
+			// Get results
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Category c = new Category(rs.getInt("category_id"), rs.getString("category_name"),
+						rs.getString("category_des"), rs.getString("category_status"));
+
+				categories.add(c);
+			}
+
+			return categories;
+		} catch (Exception e) {
+			Logger.getLogger(CategoryController.class.getName()).log(Level.SEVERE, null, e);
+			return categories;
+		} finally {
+			// close connection
 			DBContext.close(conn, stmt, rs);
 		}
 	}
@@ -258,8 +299,7 @@ public class CategoryDAO implements BaseDAO<Category> {
 	public boolean delete(int id) {
 		return delete(Integer.toString(id));
 	}
-	
-	
+
 	public boolean delete(String idStr) {
 		Connection conn = null;
 		CallableStatement cstmt = null;

@@ -1,11 +1,18 @@
 package controller.client;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import dao.CategoryDAO;
+import dao.DonationDAO;
+import model.Category;
+import model.Donation;
 
 /**
  * Servlet implementation class Navigator
@@ -30,6 +37,18 @@ public class HomeController extends HttpServlet {
 	 */
 	private void goHome(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		CategoryDAO categoryDAO = new CategoryDAO();
+		DonationDAO donationDAO = new DonationDAO();
+		
+		List<Category> categories = categoryDAO.get("Enable");
+		List<Donation> donations = donationDAO.getRecentDonation(8);
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("categoryList", categories);
+		session.setAttribute("pageActive", "home-page");
+		
+		request.setAttribute("recentDonationList", donations);
 		
 		request.getRequestDispatcher(response.encodeURL("/client/index.jsp")).forward(request, response);
 	}

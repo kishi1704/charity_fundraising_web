@@ -207,6 +207,36 @@ public class DonationDAO implements BaseDAO<Donation> {
 			DBContext.close(conn, stmt, rs);
 		}
 	}
+	
+	// Get recently donation
+	public List<Donation> getRecentDonation(int num) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		List<Donation> donations = new ArrayList<>();
+
+		try {
+			conn = new DBContext().getConnection();
+			String sql = "select top " + num + " * from donationExtend order by donation_id desc;";
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			Donation c = null;
+			while (rs.next()) {
+				c = new Donation(rs.getInt("donation_id"), rs.getInt("donation_amount"), rs.getString("donation_mess"),
+						rs.getDate("donation_date"), new User(rs.getInt("user_id"), rs.getString("username")),
+						new Fund(rs.getInt("fund_id"), rs.getString("fund_name"), rs.getString("image_url")));
+				donations.add(c);
+			}
+
+			return donations;
+		} catch (Exception e) {
+			Logger.getLogger(DonationController.class.getName()).log(Level.SEVERE, null, e);
+			return donations;
+		} finally {
+			DBContext.close(conn, stmt, rs);
+		}
+	}
 
 	@Override
 	public boolean update(Donation obj) {

@@ -1,6 +1,7 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -59,23 +60,22 @@
 				<div id="carouselRecentDonationControls"
 					class="carousel slide m-md-5" data-bs-ride="carousel">
 					<div class="carousel-inner">
-						<div class="carousel-item active">
-							<img src="<c:url value="/images/background/home_background.jpg"/>"
-								class="d-block w-100" alt="...">
-							<div class="carousel-caption d-none d-md-block">
-								<h5>First slide label</h5>
-								<p>Some representative placeholder content for the first
-									slide.</p>
+						<c:forEach var="donation"
+							items="${requestScope.recentDonationList}" varStatus="status">
+							<div class="carousel-item ${status.first ? 'active' : ''}">
+								<img src="${donation.fund.image_url}"
+									class="d-block w-100 rounded" alt="fund image">
+								<div class="carousel-caption bg-warning p-2 rounded">
+									<p class="lead fw-normal m-0">${donation.user.username}<span>
+											đã quyên góp </span>${donation.donationAmount} <span>vnđ</span>
+									</p>
+									<p class="lead m-0">
+										<q>${donation.donationMessage}</q>
+									</p>
+									<p class="m-0">${donation.donationDate}</p>
+								</div>
 							</div>
-						</div>
-						<div class="carousel-item">
-							<img src="<c:url value="/images/background/home_background.jpg"/>"
-								class="d-block w-100" alt="...">
-						</div>
-						<div class="carousel-item">
-							<img src="<c:url value="/images/background/home_background.jpg"/>"
-								class="d-block w-100" alt="...">
-						</div>
+						</c:forEach>
 					</div>
 					<button class="carousel-control-prev" type="button"
 						data-bs-target="#carouselRecentDonationControls"
@@ -97,6 +97,7 @@
 					<h3 class="content-title text-center">CÁC HOẠT ĐỘNG ĐANG DIỄN
 						RA</h3>
 					<hr class="w-50 mx-auto border border-1 border-dark">
+					
 				</div>
 			</section>
 

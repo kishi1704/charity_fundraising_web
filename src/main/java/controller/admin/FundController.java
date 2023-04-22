@@ -76,8 +76,8 @@ public class FundController extends HttpServlet {
 
 			List<Fund> funds = fundDAO.search(index, pageSize);
 
-			List<Category> categories = categoryDAO.search();
-			List<Foundation> foundations = foundationDAO.search();
+			List<Category> categories = categoryDAO.get();
+			List<Foundation> foundations = foundationDAO.get();
 
 			session.setAttribute("categoryList", categories);
 			session.setAttribute("foundationList", foundations);
