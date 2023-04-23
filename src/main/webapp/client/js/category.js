@@ -10,7 +10,7 @@ $(document).ready(function() {
 
 		var pathS = window.location.pathname.split("/");
 		$.ajax({
-			url: "/" + pathS[1] + "/home",
+			url: "/" + pathS[1] + "/category",
 			type: "get", //send it through get method
 			data: {
 				action: "addOpenFund",
@@ -36,7 +36,7 @@ $(document).ready(function() {
 
 		var pathS = window.location.pathname.split("/");
 		$.ajax({
-			url: "/" + pathS[1] + "/home",
+			url: "/" + pathS[1] + "/category",
 			type: "get", //send it through post method
 			data: {
 				action: "addClosedFund",

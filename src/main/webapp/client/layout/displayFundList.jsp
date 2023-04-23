@@ -10,7 +10,7 @@
 		</c:when>
 		<c:otherwise>
 			<div
-				class="${param.typeList == 'opening' ? 'open-fund-content' : 'closed-fund-content'} row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+				class="${param.typeList == 'opening' ? 'open-fund-content' : 'closed-fund-content'} row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
 				<c:forEach var="fund" items="${requestScope.fundList}">
 					<div
 						class="${param.typeList == 'opening' ? 'open-fund' : 'closed-fund'} col">

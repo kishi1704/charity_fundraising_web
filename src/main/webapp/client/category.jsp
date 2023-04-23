@@ -36,7 +36,7 @@
 <!-- Custom css -->
 <link rel="stylesheet" href="<c:url value="/client/css/general.css"/>">
 
-<title>Website quyên góp từ thiện FX17953</title>
+<title>Danh mục quyên góp</title>
 </head>
 <body>
 
@@ -50,51 +50,19 @@
 					<li class="breadcrumb-item ms-4"><a
 						href="<c:url value="/home"/>" class="link-success"><i
 							class="fa-solid fa-house"></i></a></li>
-					<li class="breadcrumb-item active" aria-current="page">Danh
-						sách quỹ từ thiện</li>
+					<li class="breadcrumb-item active"><a
+						class="text-decoration-none text-success"
+						href="<c:url value="/home"/>">Danh mục</a></li>
+					<li class="breadcrumb-item active" aria-current="page">${sessionScope.category.name}</li>
 				</ol>
 			</nav>
-			<section class="recent-donation px-3">
-				<div class="content-header">
-					<h3 class="content-title text-center">LƯỢT QUYÊN GÓP GẦN ĐÂY</h3>
-					<hr class="w-50 mx-auto border border-1 border-dark">
-				</div>
 
-				<div id="carouselRecentDonationControls"
-					class="carousel slide m-md-5" data-bs-ride="carousel">
-					<div class="carousel-inner">
-						<c:forEach var="donation"
-							items="${requestScope.recentDonationList}" varStatus="status">
-							<div class="carousel-item ${status.first ? 'active' : ''}">
-								<img src="${donation.fund.image_url}"
-									class="d-block w-100 rounded" alt="fund image">
-								<div class="carousel-caption bg-warning p-2 rounded">
-									<p class="lead fw-normal m-0">${donation.user.username}<span>
-											đã quyên góp </span>${donation.donationAmount} <span>vnđ</span>
-									</p>
-									<p class="lead m-0">
-										<q>${donation.donationMessage}</q>
-									</p>
-									<p class="m-0">${donation.donationDate}</p>
-								</div>
-							</div>
-						</c:forEach>
-					</div>
-					<button class="carousel-control-prev" type="button"
-						data-bs-target="#carouselRecentDonationControls"
-						data-bs-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Previous</span>
-					</button>
-					<button class="carousel-control-next" type="button"
-						data-bs-target="#carouselRecentDonationControls"
-						data-bs-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Next</span>
-					</button>
+			<header class="text-center mt-3">
+				<div class="badge rounded-pill bg-success p-3">
+					<h3 class="category-name">${sessionScope.category.name}</h3>
+					<p class="category-description lead"><em>${sessionScope.category.description}</em></p>
 				</div>
-			</section>
-
+			</header>
 			<section class="fund-opening mt-5">
 				<div class="content-header">
 					<h3 class="content-title text-center">CÁC HOẠT ĐỘNG ĐANG DIỄN
