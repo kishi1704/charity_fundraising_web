@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<footer class="container-xxl p-0 bg-success">
-	<div class="row container-xxl p-0">
+<footer class="container-xxl bg-success">
+	<div class="row container-xxl py-3">
 		<div class="col-12 col-md-4 text-center">
 			<h5>Thông tin website</h5>
 			<ul class="nav flex-column">

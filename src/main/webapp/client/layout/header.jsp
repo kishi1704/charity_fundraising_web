@@ -67,20 +67,17 @@
 									href="${pageContext.request.contextPath}/category?id=${category.id}">${category.name}</a></li>
 							</c:forEach>
 						</ul></li>
-					<li class="nav-item"><a title="Nhà tổ chức quỹ" class="nav-link foundation-page"
+					<li class="nav-item"><a title="Nhà tổ chức quỹ"
+						class="nav-link foundation-page"
 						href="${pageContext.request.contextPath}/foundation"><i
 							class="fa-solid fa-people-group"></i> Nhà tổ chức</a></li>
-					<li class="nav-item"><a title="Thông tin liên hệ"
-						class="nav-link contact-page" href="#our-contact"><i
-							class="fa-sharp fa-solid fa-address-card"></i> Liên hệ</a></li>
 					<li class="nav-item"><a class="nav-link about-page"
 						href="<c:url value="/home?action=about"/>"><i
 							class="fa-solid fa-circle-info"></i> Về chúng tôi</a></li>
 				</ul>
 				<form class="d-flex w-auto">
 					<input class="form-control me-2" type="text"
-						placeholder="Tìm kiếm quỹ" aria-label="Recipient's username"
-						value="${param.keyword}">
+						placeholder="Tìm kiếm quỹ" value="${param.keyword}">
 					<button title="Tìm kiếm theo tên quỹ" class="btn btn-outline-dark"
 						type="submit">
 						<i class="fa-solid fa-magnifying-glass"></i>

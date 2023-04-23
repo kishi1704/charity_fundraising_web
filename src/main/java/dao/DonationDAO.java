@@ -207,7 +207,7 @@ public class DonationDAO implements BaseDAO<Donation> {
 			DBContext.close(conn, stmt, rs);
 		}
 	}
-	
+
 	// Get recently donation
 	public List<Donation> getRecentDonation(int num) {
 		Connection conn = null;
@@ -238,21 +238,47 @@ public class DonationDAO implements BaseDAO<Donation> {
 		}
 	}
 
+	public int getTotalDonationForFund(int fundId) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		int total = 0;
+		try {
+			conn = new DBContext().getConnection();
+			String sql = "select sum(donation_amount) as total_d_amount from tblDonation where fund_id = ?";
+
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, fundId);
+
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				total = rs.getInt("total_d_amount");
+			}
+
+			return total;
+		} catch (Exception e) {
+			Logger.getLogger(DonationController.class.getName()).log(Level.SEVERE, null, e);
+			return total;
+		} finally {
+			// close connection
+			DBContext.close(conn, stmt, rs);
+		}
+	}
+
 	@Override
 	public boolean update(Donation obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public Donation insert(Donation obj) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean delete(int id) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

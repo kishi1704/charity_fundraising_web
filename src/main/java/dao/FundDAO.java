@@ -5,6 +5,7 @@ package dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -192,6 +193,72 @@ public class FundDAO implements BaseDAO<Fund> {
 		}
 	}
 
+	// Get list of fund
+	/**
+	 * 
+	 * @param status: 1 - opening , else - closed
+	 * @param current - current numbers fund display
+	 * @param num     - funds want to get per time
+	 * @return
+	 */
+	public List<Fund> get(int status, int current, int num) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		List<Fund> funds = new ArrayList<>();
+		try {
+			conn = new DBContext().getConnection();
+			String sql = "";
+
+			// search fund query
+			if (status == 1) {
+
+				// get opening funds
+				sql = "with x as ( select ROW_NUMBER() over (order by fund_id) as r, * from fundExtend where end_date >= ?)\r\n"
+						+ "select * from x \r\n"
+						+ "order by fund_id\r\n"
+						+ "OFFSET ? rows   \r\n"
+						+ "fetch next ? rows only;";
+
+			} else{
+				// get opening funds
+				sql = "with x as ( select ROW_NUMBER() over (order by fund_id) as r, * from fundExtend where end_date < ?)\r\n"
+						+ "select * from x \r\n"
+						+ "order by fund_id\r\n"
+						+ "OFFSET ? rows   \r\n"
+						+ "fetch next ? rows only;";
+			}
+			
+			stmt = conn.prepareStatement(sql);
+			stmt.setDate(1, new Date(System.currentTimeMillis()));
+			stmt.setInt(2, current);
+			stmt.setInt(3, num);
+
+			// Get results
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Fund f = new Fund(rs.getInt("fund_id"), rs.getString("fund_name"), rs.getString("fund_des"),
+						rs.getString("fund_content"), rs.getString("image_url"), rs.getInt("expected_amount"),
+						rs.getDate("start_date"), rs.getDate("end_date"),
+						new Category(rs.getInt("category_id"), rs.getString("category_name")),
+						new Foundation(rs.getInt("foundation_id"), rs.getString("foundation_name")),
+						rs.getString("fund_status"));
+
+				funds.add(f);
+			}
+
+			return funds;
+		} catch (Exception e) {
+			Logger.getLogger(FundController.class.getName()).log(Level.SEVERE, null, e);
+			return funds;
+		} finally {
+			// close connection
+			DBContext.close(conn, stmt, rs);
+		}
+	}
+
 	// Update fund
 	@Override
 	public boolean update(Fund f) {
@@ -271,8 +338,8 @@ public class FundDAO implements BaseDAO<Fund> {
 
 			if (rs.next()) {
 				newF = new Fund(rs.getInt(1), f.getName(), f.getDescription(), f.getContent(), f.getImage_url(),
-						f.getExpectedAmount(), f.getCreatedDate(), f.getEndDate(), f.getCategory(),
-						f.getFoundation(), f.getStatus());
+						f.getExpectedAmount(), f.getCreatedDate(), f.getEndDate(), f.getCategory(), f.getFoundation(),
+						f.getStatus());
 			} else {
 				throw new SQLException("Insert fund failed");
 			}

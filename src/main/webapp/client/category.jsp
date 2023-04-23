@@ -28,7 +28,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
 <!-- Customer JavaScript -->
-<script src="<c:url value="/client/js/index.js"/>"></script>
+<script src="<c:url value="/client/js/category.js"/>"></script>
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">

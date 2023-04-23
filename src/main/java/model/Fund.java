@@ -5,6 +5,8 @@ package model;
 
 import java.sql.Date;
 
+import dao.DonationDAO;
+
 /**
  * @author TRUONGVANTIEN
  *
@@ -147,6 +149,10 @@ public class Fund {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public int getTotalDonation() {
+		return new DonationDAO().getTotalDonationForFund(id);
 	}
 
 }
