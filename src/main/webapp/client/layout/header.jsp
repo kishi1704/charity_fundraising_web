@@ -75,9 +75,9 @@
 						href="<c:url value="/home?action=about"/>"><i
 							class="fa-solid fa-circle-info"></i> Về chúng tôi</a></li>
 				</ul>
-				<form class="d-flex w-auto">
-					<input class="form-control me-2" type="text"
-						placeholder="Tìm kiếm quỹ" value="${param.keyword}">
+				<form action="search" class="d-flex w-auto">
+					<input class="form-control me-2" type="text" name="fundName"
+						placeholder="Tìm kiếm quỹ" value="${requestScope.fundNameS}">
 					<button title="Tìm kiếm theo tên quỹ" class="btn btn-outline-dark"
 						type="submit">
 						<i class="fa-solid fa-magnifying-glass"></i>

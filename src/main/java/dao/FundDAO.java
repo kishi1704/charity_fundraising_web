@@ -28,6 +28,7 @@ import model.Fund;
  *
  */
 public class FundDAO implements BaseDAO<Fund> {
+	private static final String ENABLE_STATUS = "Enable";
 
 	// return number of all fund
 	public int countF() throws Exception {
@@ -215,7 +216,7 @@ public class FundDAO implements BaseDAO<Fund> {
 			if (status == 1) {
 
 				// get opening funds
-				sql = "with x as ( select ROW_NUMBER() over (order by fund_id) as r, * from fundExtend where end_date >= ?)\r\n"
+				sql = "with x as ( select ROW_NUMBER() over (order by fund_id) as r, * from fundExtend where end_date >= ? and fund_status = ?)\r\n"
 						+ "select * from x \r\n"
 						+ "order by fund_id\r\n"
 						+ "OFFSET ? rows   \r\n"
@@ -223,7 +224,7 @@ public class FundDAO implements BaseDAO<Fund> {
 
 			} else{
 				// get opening funds
-				sql = "with x as ( select ROW_NUMBER() over (order by fund_id) as r, * from fundExtend where end_date < ?)\r\n"
+				sql = "with x as ( select ROW_NUMBER() over (order by fund_id) as r, * from fundExtend where end_date < ? and fund_status = ?)\r\n"
 						+ "select * from x \r\n"
 						+ "order by fund_id\r\n"
 						+ "OFFSET ? rows   \r\n"
@@ -232,8 +233,9 @@ public class FundDAO implements BaseDAO<Fund> {
 			
 			stmt = conn.prepareStatement(sql);
 			stmt.setDate(1, new Date(System.currentTimeMillis()));
-			stmt.setInt(2, current);
-			stmt.setInt(3, num);
+			stmt.setString(2, ENABLE_STATUS);
+			stmt.setInt(3, current);
+			stmt.setInt(4, num);
 
 			// Get results
 			rs = stmt.executeQuery();
@@ -274,7 +276,7 @@ public class FundDAO implements BaseDAO<Fund> {
 			if (status == 1) {
 
 				// get opening funds
-				sql = "with x as ( select ROW_NUMBER() over (order by fund_id) as r, * from fundExtend where end_date >= ? and category_id = ?)\r\n"
+				sql = "with x as ( select ROW_NUMBER() over (order by fund_id) as r, * from fundExtend where end_date >= ? and category_id = ? and fund_status = ?)\r\n"
 						+ "select * from x \r\n"
 						+ "order by fund_id\r\n"
 						+ "OFFSET ? rows   \r\n"
@@ -283,7 +285,7 @@ public class FundDAO implements BaseDAO<Fund> {
 			} else{
 				
 				// get opening funds
-				sql = "with x as ( select ROW_NUMBER() over (order by fund_id) as r, * from fundExtend where end_date < ? and category_id = ?)\r\n"
+				sql = "with x as ( select ROW_NUMBER() over (order by fund_id) as r, * from fundExtend where end_date < ? and category_id = ? and fund_status = ?)\r\n"
 						+ "select * from x \r\n"
 						+ "order by fund_id\r\n"
 						+ "OFFSET ? rows   \r\n"
@@ -293,8 +295,70 @@ public class FundDAO implements BaseDAO<Fund> {
 			stmt = conn.prepareStatement(sql);
 			stmt.setDate(1, new Date(System.currentTimeMillis()));
 			stmt.setInt(2, categoryId);
-			stmt.setInt(3, current);
-			stmt.setInt(4, num);
+			stmt.setString(3, ENABLE_STATUS);
+			stmt.setInt(4, current);
+			stmt.setInt(5, num);
+
+			// Get results
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Fund f = new Fund(rs.getInt("fund_id"), rs.getString("fund_name"), rs.getString("fund_des"),
+						rs.getString("fund_content"), rs.getString("image_url"), rs.getInt("expected_amount"),
+						rs.getDate("start_date"), rs.getDate("end_date"),
+						new Category(rs.getInt("category_id"), rs.getString("category_name")),
+						new Foundation(rs.getInt("foundation_id"), rs.getString("foundation_name")),
+						rs.getString("fund_status"));
+
+				funds.add(f);
+			}
+
+			return funds;
+		} catch (Exception e) {
+			Logger.getLogger(FundController.class.getName()).log(Level.SEVERE, null, e);
+			return funds;
+		} finally {
+			// close connection
+			DBContext.close(conn, stmt, rs);
+		}
+	}
+	
+	public List<Fund> getByName(int status, String fundName, int current, int num) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		List<Fund> funds = new ArrayList<>();
+		try {
+			conn = new DBContext().getConnection();
+			String sql = "";
+
+			// search fund query
+			if (status == 1) {
+
+				// get opening funds
+				sql = "with x as ( select ROW_NUMBER() over (order by fund_id) as r, * from fundExtend where end_date >= ? and fund_name like ? and fund_status = ?)\r\n"
+						+ "select * from x \r\n"
+						+ "order by fund_id\r\n"
+						+ "OFFSET ? rows   \r\n"
+						+ "fetch next ? rows only;";
+
+			} else{
+				
+				// get opening funds
+				sql = "with x as ( select ROW_NUMBER() over (order by fund_id) as r, * from fundExtend where end_date < ? and fund_name like ? and fund_status = ?)\r\n"
+						+ "select * from x \r\n"
+						+ "order by fund_id\r\n"
+						+ "OFFSET ? rows   \r\n"
+						+ "fetch next ? rows only;";
+			}
+			
+			stmt = conn.prepareStatement(sql);
+			stmt.setDate(1, new Date(System.currentTimeMillis()));
+			stmt.setString(2,  "%" + fundName + "%");
+			stmt.setString(3, ENABLE_STATUS);
+			stmt.setInt(4, current);
+			stmt.setInt(5, num);
 
 			// Get results
 			rs = stmt.executeQuery();

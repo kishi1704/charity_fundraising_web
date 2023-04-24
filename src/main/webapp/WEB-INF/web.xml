@@ -161,6 +161,32 @@
 		<url-pattern>/category</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>ClientFoundationController</servlet-name>
+		<servlet-class>controller.client.FoundationController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ClientFoundationController</servlet-name>
+		<url-pattern>/foundation</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ClientSearchController</servlet-name>
+		<servlet-class>controller.client.SearchController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ClientSearchController</servlet-name>
+		<url-pattern>/search</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ClientDonationController</servlet-name>
+		<servlet-class>controller.client.DonationController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ClientDonationController</servlet-name>
+		<url-pattern>/donation</url-pattern>
+	</servlet-mapping>
 	<!-- Client End -->
 
 	<!-- CKFinder Start -->

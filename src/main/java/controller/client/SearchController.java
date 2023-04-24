@@ -16,22 +16,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.CategoryDAO;
 import dao.FundDAO;
-import model.Category;
 import model.Fund;
 import model.User;
 
 /**
  * Servlet implementation class CategoryController
  */
-public class CategoryController extends HttpServlet {
+public class SearchController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public CategoryController() {
+	public SearchController() {
 		super();
 	}
 
@@ -42,27 +40,24 @@ public class CategoryController extends HttpServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void showCategory(HttpServletRequest request, HttpServletResponse response)
+	private void showResult(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-
-			int id = Integer.parseInt(request.getParameter("id"));
-
-			CategoryDAO categoryDAO = new CategoryDAO();
+			String fundNameS = request.getParameter("fundName");
+			
 			FundDAO fundDAO = new FundDAO();
 
-			Category category = categoryDAO.get(id);
-			List<Fund> openFunds = fundDAO.getByCategory(1, id, 0, 3);
-			List<Fund> closedFunds = fundDAO.getByCategory(2, id, 0, 3);
+			List<Fund> openFunds = fundDAO.getByName(1, fundNameS, 0, 3);
+			List<Fund> closedFunds = fundDAO.getByName(2, fundNameS, 0, 3);
 
 			HttpSession session = request.getSession();
-			session.setAttribute("pageActive", "category-page");
-			session.setAttribute("category", category);
+			session.setAttribute("pageActive", "home-page");
 			
+			request.setAttribute("fundNameS", fundNameS);
 			request.setAttribute("openFundList", openFunds);
 			request.setAttribute("closedFundList", closedFunds);
 
-			request.getRequestDispatcher(response.encodeURL("/client/category.jsp")).forward(request, response);
+			request.getRequestDispatcher(response.encodeURL("/client/search.jsp")).forward(request, response);
 		} catch (Exception e) {
 			Logger.getLogger(SearchController.class.getName()).log(Level.SEVERE, null, e);
 		}
@@ -82,8 +77,8 @@ public class CategoryController extends HttpServlet {
 			HttpSession session = request.getSession();
 
 			FundDAO fundDAO = new FundDAO();
-			Category category = (Category) session.getAttribute("category");
-			List<Fund> openFunds = fundDAO.getByCategory(1,category.getId(), currentFunds, 3);
+			String fundNameS = (String) session.getAttribute("fundNameS");
+			List<Fund> openFunds = fundDAO.getByName(1,fundNameS, currentFunds, 3);
 
 			// Create a new Locale
 			Locale vn = new Locale("vi", "VN");
@@ -167,8 +162,8 @@ public class CategoryController extends HttpServlet {
 
 			FundDAO fundDAO = new FundDAO();
 			HttpSession session = request.getSession();
-			Category category = (Category) session.getAttribute("category");
-			List<Fund> closedFunds = fundDAO.getByCategory(2, category.getId(), currentFunds, 3);
+			String fundNameS = (String) session.getAttribute("fundNameS");
+			List<Fund> closedFunds = fundDAO.getByName(2, fundNameS, currentFunds, 3);
 
 			// Create a new Locale
 			Locale vn = new Locale("vi", "VN");
@@ -239,7 +234,7 @@ public class CategoryController extends HttpServlet {
 		String action = request.getParameter("action");
 
 		if (action == null) {
-			showCategory(request, response);
+			showResult(request, response);
 		} else if (action.equals("addOpenFund")) {
 			addMoreOpenFund(request, response);
 		} else if (action.equals("addClosedFund")) {

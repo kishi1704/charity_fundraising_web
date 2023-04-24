@@ -20,6 +20,11 @@ public class Donation {
 	public Donation() {
 		
 	}
+	
+	public Donation( int donationAmount, String donationMessage, Date donationDate, User user,
+			Fund fund) {
+		this(-1, donationAmount, donationMessage, donationDate, user, fund);
+	}
 
 	public Donation(int id, int donationAmount, String donationMessage, Date donationDate, User user,
 			Fund fund) {

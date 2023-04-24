@@ -96,11 +96,12 @@ public class HomeController extends HttpServlet {
 			
 			String displayBtn = null;
 			if(user != null && user.getRole() == 1) {
-				displayBtn = "<a class=\"btn btn-success position-relative\" style=\"z-index: 2;\"\r\n"
-						+ "href=\"https://www.google.com/?hl=vi\" role=\"button\">Quyên góp</a>";
+				displayBtn = "<a class=\"btn btn-success\"\r\n"
+						+ "href=\"#\" role=\"button\">Quyên góp</a>";
 			}else {
-				displayBtn = "<a class=\"btn btn-success position-relative\" style=\"z-index: 2;\"\r\n"
-						+ "href=\"/login\" role=\"button\">Đăng nhập để quyên góp</a>";
+				displayBtn = "<a class=\"btn btn-success position-relative\"\r\n"
+						+ "	style=\"z-index: 2;\" href=\"login\" role=\"button\">Đăng\r\n"
+						+ "nhập để quyên góp</a>\r\n";
 			}
 			
 			PrintWriter out = response.getWriter();
@@ -115,7 +116,7 @@ public class HomeController extends HttpServlet {
 							+ "				<em>" + f.getFoundation().getName() + "</em>\r\n"
 							+ "			</h6>\r\n"
 							+ "			<p class=\"card-text mb-1\">" + f.getDescription() + "</p>\r\n"
-							+ "			<a href=\"#\" class=\"stretched-link\"></a>\r\n"
+							+ "         <a href=\"donation?fundId=" + f.getId() + "&status=opening\" class=\"stretched-link\"></a>"
 							+ "		</div>\r\n"
 							+ "		<div class=\"card-footer bg-transparent border-top-0\">\r\n"
 							+ "			<div class=\"d-flex justify-content-between\">\r\n"
@@ -185,7 +186,7 @@ public class HomeController extends HttpServlet {
 							+ "				<em>" + f.getFoundation().getName() + "</em>\r\n"
 							+ "			</h6>\r\n"
 							+ "			<p class=\"card-text mb-1\">" + f.getDescription() + "</p>\r\n"
-							+ "			<a href=\"#\" class=\"stretched-link\"></a>\r\n"
+							+ "			<a href=\"donation?fundId=" + f.getId() + "&status=closed\" class=\"stretched-link\"></a>\r\n"
 							+ "		</div>\r\n"
 							+ "		<div class=\"card-footer bg-transparent border-top-0\">\r\n"
 							+ "			<div class=\"d-flex justify-content-between\">\r\n"

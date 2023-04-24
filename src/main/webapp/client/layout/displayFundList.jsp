@@ -23,7 +23,7 @@
 									<em>${fund.foundation.name}</em>
 								</h6>
 								<p class="card-text mb-1">${fund.description}</p>
-								<a href="#" class="stretched-link"></a>
+								<a href="donation?fundId=${fund.id}&status=${param.typeList}" class="stretched-link"></a>
 							</div>
 							<div class="card-footer bg-transparent border-top-0">
 								<div class="d-flex justify-content-between">
@@ -52,14 +52,13 @@
 										<c:when test="${param.typeList == 'opening'}">
 											<c:choose>
 												<c:when test="${sessionScope.user.role == 1}">
-													<a class="btn btn-success position-relative"
-														style="z-index: 2;" href="https://www.google.com/?hl=vi"
-														role="button">Quyên góp</a>
+													<a class="btn btn-success" href="#" role="button">Quyên
+														góp</a>
 												</c:when>
 												<c:otherwise>
 													<a class="btn btn-success position-relative"
-														style="z-index: 2;" href="/login"
-														role="button">Đăng nhập để quyên góp</a>
+														style="z-index: 2;" href="login" role="button">Đăng
+														nhập để quyên góp</a>
 												</c:otherwise>
 											</c:choose>
 										</c:when>

@@ -6,6 +6,8 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -273,8 +275,46 @@ public class DonationDAO implements BaseDAO<Donation> {
 	}
 
 	@Override
-	public Donation insert(Donation obj) {
-		return null;
+	public Donation insert(Donation d) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		Donation newD = null;
+		try {
+			conn = new DBContext().getConnection();
+			String sql = "insert into tblDonation(donation_amount, donation_mess, donation_date, user_id, fund_id)\r\n"
+					+ "values(?, ?, ?, ?, ?)";
+
+			stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setInt(1, d.getDonationAmount());
+			stmt.setString(2, d.getDonationMessage());
+			stmt.setDate(3, d.getDonationDate());
+			stmt.setInt(4, d.getUser().getId());
+			stmt.setInt(5, d.getFund().getId());
+
+			int affectedRows = stmt.executeUpdate();
+
+			if (affectedRows == 0) {
+				throw new SQLException("Insert donation failed");
+			}
+
+			rs = stmt.getGeneratedKeys();
+
+			if (rs.next()) {
+				newD = new Donation(rs.getInt(1), d.getDonationAmount(), d.getDonationMessage(), d.getDonationDate(), d.getUser(), d.getFund());
+			} else {
+				throw new SQLException("Insert donation failed");
+			}
+
+			return newD;
+		} catch (Exception e) {
+			Logger.getLogger(DonationController.class.getName()).log(Level.SEVERE, null, e);
+			return newD;
+		} finally {
+			// close connection
+			DBContext.close(conn, stmt, rs);
+		}
 	}
 
 	@Override
