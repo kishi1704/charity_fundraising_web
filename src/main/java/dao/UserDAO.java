@@ -174,7 +174,7 @@ public class UserDAO implements BaseDAO<User> {
 	}
 
 	// Get user by username and password
-	public User get(String username, String password) {
+	public User get(String username, String password, String status) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -183,10 +183,11 @@ public class UserDAO implements BaseDAO<User> {
 
 		try {
 			conn = new DBContext().getConnection();
-			String sql = "select * from tblUser where username = ? and password = ?;";
+			String sql = "select * from tblUser where username = ? and password = ? and user_status = ?;";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, username);
 			stmt.setString(2, password);
+			stmt.setString(3, status);
 			rs = stmt.executeQuery();
 			if (rs.next()) {
 				u = new User(rs.getInt("user_id"), rs.getString("username"), rs.getString("password"),

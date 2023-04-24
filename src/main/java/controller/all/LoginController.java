@@ -36,7 +36,7 @@ public class LogInController extends HttpServlet {
 			String password = request.getParameter("password");
 
 			UserDAO userDAO = new UserDAO();
-			User user = userDAO.get(username, PasswordCreation.encodePassword(password));
+			User user = userDAO.get(username, PasswordCreation.encodePassword(password), "Enable");
 
 			HttpSession session = request.getSession();
 			if (user != null) {
