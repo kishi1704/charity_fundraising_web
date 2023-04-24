@@ -112,7 +112,7 @@
 												value="${user.id}">Xem</button>
 											<button type="button" class="btn-edit btn btn-warning btn-sm"
 												value="${user.id}">Sửa</button> <c:if
-												test="${sessionScope.user.id != user.id}">
+												test="${sessionScope.user.id != user.id && user.status == 'Disable'}">
 												<button type="button"
 													class="btn btn-danger btn-sm btn-delete" value="${user.id}"
 													data-bs-target="#confirmModal" data-bs-toggle="modal">Xóa</button>
