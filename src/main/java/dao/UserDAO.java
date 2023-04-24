@@ -301,9 +301,10 @@ public class UserDAO implements BaseDAO<User> {
 		try {
 			conn = new DBContext().getConnection();
 
-			String sql = "delete from tblUser where user_id = ? ;";
+			String sql = "delete from tblUser where user_id = ? and user_role = ?;";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
+			stmt.setInt(2, 1);
 
 			int affectedRows = stmt.executeUpdate();
 

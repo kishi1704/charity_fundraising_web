@@ -57,7 +57,7 @@ function deleteOne(id) {
 			}else {
 				$(".error-message").html(`
 				<div class="alert alert-danger alert-dismissible fade show" role="alert">
-					<strong>Hành động xóa thất bại!</strong> Đã xảy ra lỗi. Vui lòng thực hiện lại!
+					<strong>Hành động xóa thất bại!</strong> Đã xảy ra lỗi. Vui lòng thực hiện lại! Lưu ý: Admin không được xóa
 					<button type="button" class="btn-close" data-bs-dismiss="alert"
 						aria-label="Close"></button>
 				</div>`);
