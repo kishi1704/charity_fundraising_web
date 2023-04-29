@@ -64,8 +64,7 @@
 					<div class="form-group has-validation">
 						<label class="form-label">Tên đăng nhập</label> <input
 							id="username" type="text" class="form-control"
-							value="${sessionScope.userEdit.username}" name="username"
-							${sessionScope.userEdit.role == 1 ? 'readonly' : ''}>
+							value="${sessionScope.userEdit.username}" name="username">
 						<div class="invalid-feedback">Dữ liệu không đúng!</div>
 					</div>
 
@@ -91,8 +90,7 @@
 					<div class="form-group has-validation">
 						<label class="form-label">Họ và tên</label> <input
 							id="user-fullname" type="text" class="form-control"
-							value="${sessionScope.userEdit.fullName}" name="userFullName"
-							${sessionScope.userEdit.role == 1 ? 'readonly' : ''}>
+							value="${sessionScope.userEdit.fullName}" name="userFullName">
 						<div class="invalid-feedback">Dữ liệu không đúng!</div>
 					</div>
 
@@ -100,24 +98,21 @@
 						<label class="form-label">Số điện thoại</label> <input
 							id="user-phone-number" type="text" class="form-control"
 							value="${sessionScope.userEdit.phoneNumber}"
-							name="userPhoneNumber"
-							${sessionScope.userEdit.role == 1 ? 'readonly' : ''}>
-						<div class="invalid-feedback">Dữ liệu không đúng!</div>
+							name="userPhoneNumber">
+						<div class="invalid-feedback">Số điện thoại gồm 10 chữ số!</div>
 					</div>
 
 					<div class="form-group has-validation">
 						<label class="form-label">Email</label> <input id="user-email"
 							type="text" class="form-control"
-							value="${sessionScope.userEdit.email}" name="userEmail"
-							${sessionScope.userEdit.role == 1 ? 'readonly' : ''}>
+							value="${sessionScope.userEdit.email}" name="userEmail">
 						<div class="invalid-feedback">Dữ liệu không đúng!</div>
 					</div>
 
 					<div class="form-group has-validation">
 						<label class="form-label">Địa chỉ</label> <input id="user-address"
 							type="text" class="form-control"
-							value="${sessionScope.userEdit.address}" name="userAddress"
-							${sessionScope.userEdit.role == 1 ? 'readonly' : ''}>
+							value="${sessionScope.userEdit.address}" name="userAddress">
 						<div class="invalid-feedback">Dữ liệu không đúng!</div>
 					</div>
 
@@ -125,7 +120,7 @@
 						<div class="form-group">
 							<label class="form-label">Trạng thái</label> <select
 								id="user-status" class="form-select w-15" name="userStatus"
-								${sessionScope.user.role == sessionScope.userEdit.role ? 'disabled' : ''}>
+								${sessionScope.user.username == sessionScope.userEdit.username ? 'disabled' : ''}>
 								<c:forEach var="status" items="${sessionScope.statusList}">
 									<c:if test="${sessionScope.userEdit.status == status}">
 										<option selected>${status}</option>

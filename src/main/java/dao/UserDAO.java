@@ -226,7 +226,7 @@ public class UserDAO implements BaseDAO<User> {
 			stmt.setString(6, u.getAddress());
 			stmt.setString(7, u.getStatus());
 			stmt.setInt(8, u.getId());
-
+			
 			int affectedRows = stmt.executeUpdate();
 
 			if (affectedRows == 0) {

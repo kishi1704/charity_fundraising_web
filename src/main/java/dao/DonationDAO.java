@@ -189,7 +189,7 @@ public class DonationDAO implements BaseDAO<Donation> {
 
 		try {
 			conn = new DBContext().getConnection();
-			String sql = "select *  from donationExtend  where user_id = ?;";
+			String sql = "select *  from donationExtend  where user_id = ? order by donation_date desc;";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, userId);
 			rs = stmt.executeQuery();

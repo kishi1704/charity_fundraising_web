@@ -195,19 +195,18 @@ public class CategoryController extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 
-			String categoryIdStr = request.getParameter("categoryId");
-			int categoryId = Integer.parseInt(categoryIdStr);
+			HttpSession session = request.getSession();
+			Category categoryEdit = (Category) session.getAttribute("category");
 
 			String categoryName = request.getParameter("categoryName");
 			String categoryDescription = request.getParameter("categoryDescription");
 			String categoryStatus = request.getParameter("categoryStatus");
 
 			CategoryDAO categoryDAO = new CategoryDAO();
-			Category category = new Category(categoryId, categoryName, categoryDescription, categoryStatus);
+			Category category = new Category(categoryEdit.getId(), categoryName, categoryDescription, categoryStatus);
 
 			boolean isUpdated = categoryDAO.update(category);
 
-			HttpSession session = request.getSession();
 			if (isUpdated) {
 				int index = (Integer) session.getAttribute("index");
 				int pageSize = Integer.parseInt(getServletConfig().getInitParameter("pageSize"));

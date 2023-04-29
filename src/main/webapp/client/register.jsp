@@ -79,7 +79,7 @@
 												type="text" name="userPhoneNumber"
 												value="${requestScope.userPhoneNumber}"
 												id="user-phone-number" class="form-control form-control-lg" />
-											<div class="invalid-feedback">Dữ liệu không đúng!</div>
+											<div class="invalid-feedback">Số điện thoại gồm 10 chữ số!</div>
 										</div>
 										<div class="form-outline mb-2">
 											<label class="form-label">Địa chỉ</label> <input type="text"

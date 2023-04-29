@@ -182,27 +182,27 @@ public class UserController extends HttpServlet {
 	private void updateUser(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-
-			String userIdStr = request.getParameter("userId");
-			int userId = Integer.parseInt(userIdStr);
+			HttpSession session = request.getSession();
+			User userEdit = (User) session.getAttribute("userEdit");
+			User currentUser = (User) session.getAttribute("user");
 
 			String username = request.getParameter("username");
 			String userRoleStr = request.getParameter("userRole");
-			int userRole = Integer.parseInt(userRoleStr);
+			int userRole = userEdit.getRole() == 1 ? Integer.parseInt(userRoleStr) : 2;
 
 			String userFullName = request.getParameter("userFullName");
 			String userPhoneNumber = request.getParameter("userPhoneNumber");
 			String userEmail = request.getParameter("userEmail");
 			String userAddress = request.getParameter("userAddress");
-			String userStatus = request.getParameter("userStatus");
+			String userStatus = userEdit.getId() != currentUser.getId() ? request.getParameter("userStatus")
+					: currentUser.getStatus();
 
 			UserDAO userDAO = new UserDAO();
-			User user = new User(userId, username, userRole, userFullName, userEmail, userAddress, userPhoneNumber,
-					userStatus);
+			User user = new User(userEdit.getId(), username, userRole, userFullName, userEmail, userAddress,
+					userPhoneNumber, userStatus);
 
 			boolean isUpdated = userDAO.update(user);
 
-			HttpSession session = request.getSession();
 			if (isUpdated) {
 				int index = (Integer) session.getAttribute("index");
 				int pageSize = Integer.parseInt(getServletConfig().getInitParameter("pageSize"));
@@ -246,7 +246,7 @@ public class UserController extends HttpServlet {
 			Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param request
@@ -263,42 +263,42 @@ public class UserController extends HttpServlet {
 			String userPhoneNumber = request.getParameter("userPhoneNumber");
 			String userEmail = request.getParameter("userEmail");
 			String userAddress = request.getParameter("userAddress");
-			
+
 			UserDAO userDAO = new UserDAO();
-			User user = new User(username, 2, userFullName, userEmail, userAddress, userPhoneNumber,
-					"Enable");
-			
+			User user = new User(username, 2, userFullName, userEmail, userAddress, userPhoneNumber, "Enable");
+
 			HttpSession session = request.getSession();
-			if(userDAO.isExistUser(username, userEmail)) {
+			if (userDAO.isExistUser(username, userEmail)) {
 				session.setAttribute("USResult", "false");
 				session.setAttribute("userEdit", user);
 				response.sendRedirect(
 						response.encodeRedirectURL(request.getContextPath() + "/admin/user?action=errorU"));
-			}else {
+			} else {
 				String password = PasswordCreation.generateRandomPassword(8);
 				user.setPassword(PasswordCreation.encodePassword(password));
-				
-				File registerForm=new File(getServletContext().getRealPath("/document/registerform.txt"));
+
+				File registerForm = new File(getServletContext().getRealPath("/document/registerform.txt"));
 				boolean isSuccessSending = UserAction.sendRegisterMail(user, password, registerForm);
-				
-				if(isSuccessSending && userDAO.insert(user) != null) {
+
+				if (isSuccessSending && userDAO.insert(user) != null) {
 					session.setAttribute("USResult", "true");
 					session.setAttribute("userEdit", user);
 					request.setAttribute("verifyModalAction", "show");
-					request.getRequestDispatcher(response.encodeURL("/admin/user/userForm.jsp")).forward(request, response);
-				}else {
+					request.getRequestDispatcher(response.encodeURL("/admin/user/userForm.jsp")).forward(request,
+							response);
+				} else {
 					session.setAttribute("USResult", "false");
 					session.setAttribute("userEdit", user);
 					response.sendRedirect(
 							response.encodeRedirectURL(request.getContextPath() + "/admin/user?action=errorU"));
 				}
 			}
-			
+
 		} catch (Exception e) {
 			Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param request
@@ -326,7 +326,7 @@ public class UserController extends HttpServlet {
 			Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, e);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param request
@@ -345,95 +345,67 @@ public class UserController extends HttpServlet {
 			User user = userDAO.get(userId);
 
 			PrintWriter out = response.getWriter();
-			if(user != null) {
+			if (user != null) {
 				out.println("<div class=\"modal fade\" id=\"user-modal-view\" data-bs-backdrop=\"static\"\r\n"
-						+ "	data-bs-keyboard=\"false\" tabindex=\"-1\" aria-hiden=\"true\">\r\n"
-						+ "	<div\r\n"
+						+ "	data-bs-keyboard=\"false\" tabindex=\"-1\" aria-hiden=\"true\">\r\n" + "	<div\r\n"
 						+ "		class=\"modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable\">\r\n"
-						+ "		<div class=\"modal-content\">\r\n"
-						+ "			<div class=\"modal-header\">\r\n"
-						+ "				<h5 class=\"modal-title\">Xem tài khoản</h5>\r\n"
-						+ "			</div>\r\n"
+						+ "		<div class=\"modal-content\">\r\n" + "			<div class=\"modal-header\">\r\n"
+						+ "				<h5 class=\"modal-title\">Xem tài khoản</h5>\r\n" + "			</div>\r\n"
 						+ "			<div class=\"modal-body\">\r\n"
 						+ "				<form action=\"#\" method=\"post\">\r\n"
 						+ "					<div class=\"form-group\">\r\n"
 						+ "						<label class=\"form-label\">ID</label> <input id=\"user-id\"\r\n"
-						+ "							type=\"text\" class=\"form-control\" value=\"" + user.getId() + "\" readonly name=\"userId\" />\r\n"
-						+ "					</div>\r\n"
-						+ "\r\n"
+						+ "							type=\"text\" class=\"form-control\" value=\"" + user.getId()
+						+ "\" readonly name=\"userId\" />\r\n" + "					</div>\r\n" + "\r\n"
 						+ "					<div class=\"form-group\">\r\n"
 						+ "						<label class=\"form-label\">Tên đăng nhập</label> <input\r\n"
-						+ "							id=\"username\" type=\"text\" class=\"form-control\" value=\"" + user.getUsername() + "\"\r\n"
-						+ "							name=\"username\" readonly>\r\n"
-						+ "					</div>\r\n"
-						+ "\r\n"
-						+ "					<div class=\"form-group\">\r\n"
+						+ "							id=\"username\" type=\"text\" class=\"form-control\" value=\""
+						+ user.getUsername() + "\"\r\n" + "							name=\"username\" readonly>\r\n"
+						+ "					</div>\r\n" + "\r\n" + "					<div class=\"form-group\">\r\n"
 						+ "						<label class=\"form-label\">Vai trò</label> <input id=\"user-role\"\r\n"
-						+ "							type=\"text\" class=\"form-control\" value=\"" + (user.getRole() == 1 ? "User" : "Admin") + "\" readonly\r\n"
-						+ "							name=\"userRole\" />\r\n"
-						+ "					</div>\r\n"
-						+ "\r\n"
+						+ "							type=\"text\" class=\"form-control\" value=\""
+						+ (user.getRole() == 1 ? "User" : "Admin") + "\" readonly\r\n"
+						+ "							name=\"userRole\" />\r\n" + "					</div>\r\n" + "\r\n"
 						+ "					<div class=\"form-group\">\r\n"
 						+ "						<label class=\"form-label\">Họ và tên</label> <input\r\n"
-						+ "							id=\"user-fullname\" type=\"text\" class=\"form-control\" value=\"" + user.getFullName() + "\"\r\n"
-						+ "							name=\"userFullName\" readonly>\r\n"
-						+ "\r\n"
-						+ "					</div>\r\n"
-						+ "\r\n"
+						+ "							id=\"user-fullname\" type=\"text\" class=\"form-control\" value=\""
+						+ user.getFullName() + "\"\r\n" + "							name=\"userFullName\" readonly>\r\n"
+						+ "\r\n" + "					</div>\r\n" + "\r\n"
 						+ "					<div class=\"form-group\">\r\n"
 						+ "						<label class=\"form-label\">Số điện thoại</label> <input\r\n"
-						+ "							id=\"user-phone-number\" type=\"text\" class=\"form-control\" value=\"" + user.getPhoneNumber() + "\"\r\n"
-						+ "							name=\"userPhoneNumber\" readonly>\r\n"
-						+ "\r\n"
-						+ "					</div>\r\n"
-						+ "\r\n"
-						+ "					<div class=\"form-group \">\r\n"
+						+ "							id=\"user-phone-number\" type=\"text\" class=\"form-control\" value=\""
+						+ user.getPhoneNumber() + "\"\r\n"
+						+ "							name=\"userPhoneNumber\" readonly>\r\n" + "\r\n"
+						+ "					</div>\r\n" + "\r\n" + "					<div class=\"form-group \">\r\n"
 						+ "						<label class=\"form-label\">Email</label> <input id=\"user-email\"\r\n"
-						+ "							type=\"text\" class=\"form-control\" value=\"" + user.getEmail() + "\" name=\"userEmail\"\r\n"
-						+ "							readonly>\r\n"
-						+ "\r\n"
-						+ "					</div>\r\n"
-						+ "\r\n"
-						+ "					<div class=\"form-group\">\r\n"
+						+ "							type=\"text\" class=\"form-control\" value=\"" + user.getEmail()
+						+ "\" name=\"userEmail\"\r\n" + "							readonly>\r\n" + "\r\n"
+						+ "					</div>\r\n" + "\r\n" + "					<div class=\"form-group\">\r\n"
 						+ "						<label class=\"form-label\">Địa chỉ</label> <input id=\"user-address\"\r\n"
-						+ "							type=\"text\" class=\"form-control\" value=\"" + user.getAddress() + "\" name=\"userAddress\"\r\n"
-						+ "							readonly>\r\n"
-						+ "\r\n"
-						+ "					</div>\r\n"
-						+ "\r\n"
-						+ "					<div class=\"form-group\">\r\n"
+						+ "							type=\"text\" class=\"form-control\" value=\"" + user.getAddress()
+						+ "\" name=\"userAddress\"\r\n" + "							readonly>\r\n" + "\r\n"
+						+ "					</div>\r\n" + "\r\n" + "					<div class=\"form-group\">\r\n"
 						+ "						<label class=\"form-label\">Trạng thái</label> <input\r\n"
-						+ "							id=\"user-status\" type=\"text\" class=\"form-control\" value=\"" + user.getStatus() + "\"\r\n"
-						+ "							readonly name=\"userStatus\" />\r\n"
-						+ "					</div>\r\n"
-						+ "				</form>\r\n"
-						+ "			</div>\r\n"
+						+ "							id=\"user-status\" type=\"text\" class=\"form-control\" value=\""
+						+ user.getStatus() + "\"\r\n" + "							readonly name=\"userStatus\" />\r\n"
+						+ "					</div>\r\n" + "				</form>\r\n" + "			</div>\r\n"
 						+ "			<div class=\"modal-footer\">\r\n"
 						+ "				<button type=\"button\" class=\"btn btn-secondary\" data-bs-dismiss=\"modal\">Đóng</button>\r\n"
-						+ "			</div>\r\n"
-						+ "		</div>\r\n"
-						+ "	</div>\r\n"
-						+ "</div>");
-			}else {
+						+ "			</div>\r\n" + "		</div>\r\n" + "	</div>\r\n" + "</div>");
+			} else {
 				out.println("<div class=\"modal fade\" id=\"user-modal-view\"\r\n"
 						+ "		data-bs-backdrop=\"static\" data-bs-keyboard=\"false\" tabindex=\"-1\"\r\n"
-						+ "		aria-hidden=\"true\">\r\n"
-						+ "		<div\r\n"
+						+ "		aria-hidden=\"true\">\r\n" + "		<div\r\n"
 						+ "			class=\"modal-dialog modal-dialog-centered modal-dialog-scrollable\">\r\n"
 						+ "			<div class=\"modal-content\">\r\n"
 						+ "				<div class=\"modal-header\">\r\n"
 						+ "					<h5 class=\"modal-title\">Xem tài khoản</h5>\r\n"
-						+ "				</div>\r\n"
-						+ "				<div class=\"modal-body\">\r\n"
+						+ "				</div>\r\n" + "				<div class=\"modal-body\">\r\n"
 						+ "					<h6>Lỗi! Không có thông tin để hiển thị</h6>\r\n"
-						+ "				</div>\r\n"
-						+ "				<div class=\"modal-footer\">\r\n"
+						+ "				</div>\r\n" + "				<div class=\"modal-footer\">\r\n"
 						+ "					<button type=\"button\" class=\"btn btn-secondary\"\r\n"
 						+ "						data-bs-dismiss=\"modal\">Đóng</button>\r\n"
-						+ "				</div>\r\n"
-						+ "			</div>\r\n"
-						+ "		</div>\r\n"
-						+ "	</div>");
+						+ "				</div>\r\n" + "			</div>\r\n" + "		</div>\r\n" + "	</div>");
 			}
 		} catch (Exception e) {
 			Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, e);
@@ -462,15 +434,13 @@ public class UserController extends HttpServlet {
 		} else if (action.equals("add")) {
 			addUser(request, response);
 		} else if (action.equals("update")) {
-			request.getRequestDispatcher(response.encodeURL("/admin/user/user.jsp")).forward(request,
-					response);
+			request.getRequestDispatcher(response.encodeURL("/admin/user/user.jsp")).forward(request, response);
 		} else if (action.equals("errorU")) {
-			request.getRequestDispatcher(response.encodeURL("/admin/user/userForm.jsp")).forward(request,
-					response);
+			request.getRequestDispatcher(response.encodeURL("/admin/user/userForm.jsp")).forward(request, response);
 		} else if (action.equals("cancel")) {
 			session.setAttribute("userAction", "home");
 			showUser(request, response);
-		}else if(action.equals("view")) {
+		} else if (action.equals("view")) {
 			viewUser(request, response);
 		}
 	}
@@ -491,11 +461,11 @@ public class UserController extends HttpServlet {
 
 		if (action.equals("save") && session.getAttribute("userAction").equals("edit")) {
 			updateUser(request, response);
-		}else if (action.equals("save") && session.getAttribute("userAction").equals("add")) {
+		} else if (action.equals("save") && session.getAttribute("userAction").equals("add")) {
 			insertUser(request, response);
-		}else if (action.equals("delete")) {
+		} else if (action.equals("delete")) {
 			deleteUser(request, response);
-		}else {
+		} else {
 			doGet(request, response);
 		}
 	}

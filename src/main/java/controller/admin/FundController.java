@@ -191,8 +191,8 @@ public class FundController extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 
-			String fundIdStr = request.getParameter("fundId");
-			int fundId = Integer.parseInt(fundIdStr);
+			HttpSession session = request.getSession();
+			Fund fundEdit = (Fund) session.getAttribute("fund");
 
 			String fundName = request.getParameter("fundName");
 			String fundDescription = request.getParameter("fundDescription");
@@ -217,12 +217,11 @@ public class FundController extends HttpServlet {
 			String fundStatus = request.getParameter("fundStatus");
 
 			FundDAO fundDAO = new FundDAO();
-			Fund fund = new Fund(fundId, fundName, fundDescription, fundContent, fundImage_url, fundEAmount,
+			Fund fund = new Fund(fundEdit.getId(), fundName, fundDescription, fundContent, fundImage_url, fundEAmount,
 					createdDate, endDate, new Category(categoryId, null), new Foundation(foundationId, null), fundStatus);
 
 			boolean isUpdated = fundDAO.update(fund);
 
-			HttpSession session = request.getSession();
 			if (isUpdated) {
 				int index = (Integer) session.getAttribute("index");
 				int pageSize = Integer.parseInt(getServletConfig().getInitParameter("pageSize"));

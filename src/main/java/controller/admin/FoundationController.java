@@ -177,9 +177,8 @@ public class FoundationController extends HttpServlet {
 	private void updateFoundation(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-
-			String foundationIdStr = request.getParameter("foundationId");
-			int foundationId = Integer.parseInt(foundationIdStr);
+			HttpSession session = request.getSession();
+			Foundation foundationEdit =(Foundation) session.getAttribute("foundation");
 
 			String foundationName = request.getParameter("foundationName");
 			String foundationDescription = request.getParameter("foundationDescription");
@@ -187,12 +186,11 @@ public class FoundationController extends HttpServlet {
 			String foundationStatus = request.getParameter("foundationStatus");
 
 			FoundationDAO foundationDAO = new FoundationDAO();
-			Foundation foundation = new Foundation(foundationId, foundationName, foundationDescription, foundationEmail,
+			Foundation foundation = new Foundation(foundationEdit.getId(), foundationName, foundationDescription, foundationEmail,
 					foundationStatus);
 
 			boolean isUpdated = foundationDAO.update(foundation);
 
-			HttpSession session = request.getSession();
 			if (isUpdated) {
 				int index = (Integer) session.getAttribute("index");
 				int pageSize = Integer.parseInt(getServletConfig().getInitParameter("pageSize"));
