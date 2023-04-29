@@ -2,7 +2,9 @@ package controller.client;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -130,9 +132,8 @@ public class UserController extends HttpServlet {
 			Locale vn = new Locale("vi", "VN");
 			// Create a formatter given the Locale
 			NumberFormat vndFormat = NumberFormat.getCurrencyInstance(vn);
+			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			
-			
-
 			PrintWriter out = response.getWriter();
 			if (donation != null) {
 				out.println("<div class=\"modal fade\" id=\"donation-modal-view\"\r\n"
@@ -162,7 +163,7 @@ public class UserController extends HttpServlet {
 						+ "						<div class=\"form-group\">\r\n"
 						+ "							<label class=\"form-label\">Ngày quyên góp</label> <input\r\n"
 						+ "								id=\"donation-created-date\" type=\"text\" class=\"form-control\"\r\n"
-						+ "								name=\"donationCDate\" readonly value=\"" + donation.getDonationDate() +"\">\r\n"
+						+ "								name=\"donationCDate\" readonly value=\"" + df.format(donation.getDonationDate()) +"\">\r\n"
 						+ "						</div>\r\n"
 						+ "\r\n"
 						+ "						<div class=\"form-group\">\r\n"

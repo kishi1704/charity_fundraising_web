@@ -121,8 +121,10 @@
 										<fmt:formatNumber var="amount" type="currency"
 											value="${fund.expectedAmount}" />
 										<td class="fund-expected-amount">${amount}</td>
-										<td class="fund-created-date">${fund.createdDate}</td>
-										<td class="fund-created-date">${fund.endDate}</td>
+										<td class="fund-created-date"><fmt:formatDate
+												pattern="dd-MM-yyyy" value="${fund.createdDate}" /></td>
+										<td class="fund-created-date"><fmt:formatDate
+												pattern="dd-MM-yyyy" value="${fund.endDate}" /></td>
 										<td class="fund-foundation"><span
 											class="d-inline-block text-truncate" style="width: 5rem;">
 												${fund.category.name}</span></td>

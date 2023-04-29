@@ -3,7 +3,9 @@ package controller.admin;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -368,7 +370,8 @@ public class FundController extends HttpServlet {
 			Locale vn = new Locale("vi", "VN");
 			// Create a formatter given the Locale
 			NumberFormat vndFormat = NumberFormat.getCurrencyInstance(vn);
-
+			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+			
 			PrintWriter out = response.getWriter();
 			if(fund != null) {
 				out.println("<div class=\"modal fade\" id=\"fund-modal-view\" data-bs-backdrop=\"static\"\r\n"
@@ -424,13 +427,13 @@ public class FundController extends HttpServlet {
 						+ "							<label class=\"form-label\">Ngày bắt đầu</label> <input\r\n"
 						+ "								id=\"fund-created-date\" type=\"text\" class=\"form-control\"\r\n"
 						+ "								name=\"fundCDate\" readonly\r\n"
-						+ "								value=\"" + fund.getCreatedDate() + "\">\r\n"
+						+ "								value=\"" + df.format(fund.getCreatedDate()) + "\">\r\n"
 						+ "						</div>\r\n"
 						+ "\r\n"
 						+ "						<div class=\"form-group\">\r\n"
 						+ "							<label class=\"form-label\">Ngày kết thúc</label> <input\r\n"
 						+ "								id=\"fund-end-date\" type=\"text\" class=\"form-control \"\r\n"
-						+ "								name=\"fundEDate\" readonly value=\"" + fund.getEndDate() + "\">\r\n"
+						+ "								name=\"fundEDate\" readonly value=\"" + df.format(fund.getEndDate()) + "\">\r\n"
 						+ "						</div>\r\n"
 						+ "\r\n"
 						+ "						<div class=\"form-group\">\r\n"

@@ -91,7 +91,8 @@
 										<td class="donation-message"><span
 											class="d-inline-block text-truncate" style="width: 12rem;">
 												${donation.donationMessage}</span></td>
-										<td class="donation-created-date">${donation.donationDate}</td>
+										<td class="donation-created-date"><fmt:formatDate
+												pattern="dd-MM-yyyy" value="${donation.donationDate}" /></td>
 										<td class="donation-username">${donation.user.username}</td>
 										<td class="donation-fundname"><span
 											class="d-inline-block text-truncate" style="width: 12rem;">
