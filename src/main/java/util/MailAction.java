@@ -14,7 +14,7 @@ public class MailAction {
 	public static final String SMTP_HOST = "smtp.gmail.com";
 	public static final int SMTP_PORT = 587;
 	public static final String SMTP_GMAIL_USERNAME = "duantuthien39@gmail.com";
-	public static final String SMTP_GMAIL_PASSWORD = "yrjcykgeyyrmjsrs";
+	public static final String SMTP_GMAIL_PASSWORD = "***********";
 	
 	private String username;
 	private String password;
