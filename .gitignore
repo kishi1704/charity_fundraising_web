@@ -5,3 +5,4 @@
 **/test/
 **/build/
 **/*.class
+**/bin/
