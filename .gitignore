@@ -1,8 +1,7 @@
-.classpath
-.project
-.settings/
-target/
-META-INF/
-plugins/
-test/
-/build/
+**/.classpath
+**/.project
+**/.settings/
+**/target/
+**/test/
+**/build/
+**/*.class
