@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import util.ReadProperties;
+
 /**
  * @author TRUONGVANTIEN
  *
@@ -18,13 +20,13 @@ public class DBContext {
 	 * Change/update information of your database connection DO NOT change name of
 	 * instance variables in this class
 	 */
-
-	private final String serverName = "localhost";
-	private final String dbName = "FundraiserDB";
-	private final String portNumber = "1433";
-	private final String instance = ""; // leave this one empty if your sql is a single instace
-	private final String userID = "sa";
-	private final String password = "letmein";
+	private final ReadProperties readPro = ReadProperties.getInstance();
+	private final String serverName = readPro.getProperty("serverName");
+	private final String dbName = readPro.getProperty("dbName");
+	private final String portNumber = readPro.getProperty("portNumber");
+	private final String instance = readPro.getProperty("instance"); // leave this one empty if your sql is a single instace
+	private final String userID = readPro.getProperty("userID");
+	private final String password = readPro.getProperty("password");
 
 	/**
 	 * Get connection to database

@@ -11,10 +11,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class MailAction {
-	public static final String SMTP_HOST = "smtp.gmail.com";
-	public static final int SMTP_PORT = 587;
-	public static final String SMTP_GMAIL_USERNAME = "duantuthien39@gmail.com";
-	public static final String SMTP_GMAIL_PASSWORD = "***********";
+	
+	public static final String SMTP_HOST = ReadProperties.getInstance().getProperty("smtpHost");
+	public static final int SMTP_PORT = Integer.parseInt(ReadProperties.getInstance().getProperty("smtpPort"));
+	public static final String SMTP_GMAIL_USERNAME = ReadProperties.getInstance().getProperty("smtpGmailUsername");
+	public static final String SMTP_GMAIL_PASSWORD = ReadProperties.getInstance().getProperty("smtpGmailUserPassword");
 	
 	private String username;
 	private String password;
