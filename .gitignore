@@ -2,7 +2,9 @@
 **/.project
 **/.settings/
 **/target/
-**/test/
 **/build/
 **/*.class
 **/bin/
+**/*.log
+src/main/resources/config.properties
+
