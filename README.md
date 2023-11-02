@@ -9,7 +9,7 @@
 
 ## Demo
 - Check out the live demo of the website:
-- Check out the link to see the video demo: 
+- Check out the link to see the video demo: https://drive.google.com/file/d/1muiyP9l228fOGN9rRy0XEAeu0KW8gTC9/view?usp=sharing
 ## Features
 - Present the organization's mission, vision, and values.
 - Highlight ongoing and past projects with descriptions and images.
